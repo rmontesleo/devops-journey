@@ -20,6 +20,10 @@
 - [How to Install and Configure doctl](https://docs.digitalocean.com/reference/doctl/how-to/install/)
 
 
+## Rust
+
+- [How to install Rust on Ubuntu Linux](https://www.digitalocean.com/community/tutorials/install-rust-on-ubuntu-linux)
+
 ## Settings
 
 - [How to remove ssh key](https://www.digitalocean.com/community/questions/how-to-remove-ssh-key)
