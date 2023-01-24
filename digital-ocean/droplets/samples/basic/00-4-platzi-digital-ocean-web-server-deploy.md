@@ -401,6 +401,10 @@ ls -lah
 
 ## References
 
+- [How To Secure Nginx with Let's Encrypt on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
+
+- [Point to DigitalOcean Nameservers From Common Domain Registrars](https://docs.digitalocean.com/tutorials/dns-registrars/)
+
 - [How to install WordPress](https://wordpress.org/documentation/article/how-to-install-wordpress/)
 
 - [wordpress.org](https://wordpress.org/)
