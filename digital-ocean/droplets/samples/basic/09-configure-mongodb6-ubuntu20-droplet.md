@@ -10,7 +10,7 @@ curl -X POST -H 'Content-Type: application/json' \
         "size":"s-2vcpu-4gb",
         "region":"sfo3",
         "image":"ubuntu-20-04-x64",
-        "vpc_uuid":"'$vpc-uuid'"}' \
+        "vpc_uuid":"'$vpc_uuid'"}' \
     "https://api.digitalocean.com/v2/droplets"
 ```
 
@@ -21,7 +21,7 @@ doctl compute droplet create \
     --image ubuntu-20-04-x64 \
     --size s-2vcpu-4gb \
     --region sfo3 \
-    --vpc-uuid $vpc-uuid \
+    --vpc-uuid $vpc_uuid \
     ubuntu20-mongodb-droplet
 ```
 

@@ -1,34 +1,79 @@
 # Platzi
 
 
-## Clase 16: 
+## Clase 16: Conociendo una API
 
-
-####
-```
-
-```
-
-## Clase 17: 
 
 
 ####
+```text
+Digital Ocean cuenta con una API que nos permite mediante peticiones HTTP (con los métodos get, post, put, delete) realizar operaciones sobre los productos que ellos ofrecen, como droplets, volumes, etc.
+
+Es decir, podemos crear un droplet, apagarlo, destruirlo o incluso redimensionarlo mediante el llamado a la API.
+
+En la documentación oficial podremos encontrar más casos de uso, lo único que debemos tener en cuenta es que requerimos de un token de autorización para interactuar con la API y este se obtiene en el panel de control.
 ```
 
+## Clase 17: Cómo generar una API Key en Digital Ocean
+
+
+####
+```text
+La API de Digital Ocean nos permite automatizar todo lo que hacemos en el panel de control pero usando comandos a través de peticiones http.
+
+API Key es un hash que identifica el equipo que se conecta a Digital Ocean.
+```
+
+#### Creating the token
+```bash
+# Go to API section
+# Create a new token
 ```
 
 
 ## Clase 18: Creacion de un Droplet por API 
 
-####
+#### get account ssh keys
+```bash
+curl -X GET -H 'Content-Type: application/json' \
+-H 'Authorization: Bearer '$TOKEN'' \
+"https://api.digitalocean.com/v2/account/keys"  | jq
+
+# copy the id of the required ssh key
 ```
 
+### get vpc
+```bash
+# get vpcs
+curl -X GET   -H "Content-Type: application/json"   \
+-H "Authorization: Bearer $TOKEN" \
+"https://api.digitalocean.com/v2/vpcs" | jq
+```
+
+#### Create 
+```bash
+
+curl -X POST -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer '$TOKEN'' \
+    -d '{"name":"created-api-ubuntu-droplet",
+        "size":"s-1vcpu-512mb-10gb",
+        "region":"sfo3",
+        "ssh_keys": [ "'$ssh_id_key'"  ],
+        "image":"ubuntu-22-04-x64"}' \
+    "https://api.digitalocean.com/v2/droplets" | jq
 ```
 
 
 ---
 
 ## References
+
+- [API](https://docs.digitalocean.com/reference/api/)
+
+- [DigitalOcean API (2.0)](https://docs.digitalocean.com/reference/api/kafka-beta-api-reference/)
+
+- [Droplet Actions](https://docs.digitalocean.com/reference/api/kafka-beta-api-reference/#tag/Droplet-Actions)
+
 
 - [How do I start with Node.js after I installed it?](https://nodejs.org/en/docs/guides/getting-started-guide/)
 

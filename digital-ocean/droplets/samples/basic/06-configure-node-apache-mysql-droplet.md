@@ -12,7 +12,7 @@ curl -X POST -H 'Content-Type: application/json' \
         "size":"s-1vcpu-1gb",
         "region":"sfo3",
         "image":"ubuntu-22-04-x64",
-        "vpc_uuid":"'$vpc-uuid'"}' \
+        "vpc_uuid":"'$vpc_uuid'"}' \
     "https://api.digitalocean.com/v2/droplets"
 ```
 
@@ -22,7 +22,7 @@ doctl compute droplet create \
     --image ubuntu-22-04-x64 \
     --size s-1vcpu-1gb \
     --region sfo3 \
-    --vpc-uuid $vpc-uuid \
+    --vpc-uuid $vpc_uuid \
     ubuntu-apps-php-node-mysql-droplet
 ```
 
