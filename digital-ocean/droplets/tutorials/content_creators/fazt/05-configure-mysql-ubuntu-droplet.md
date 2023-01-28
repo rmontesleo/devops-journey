@@ -3,6 +3,20 @@
 
 ##
 
+### get vpcs
+```bash
+curl -X GET   -H "Content-Type: application/json"   \
+-H "Authorization: Bearer $TOKEN" \
+"https://api.digitalocean.com/v2/vpcs" | jq
+```
+
+### get your ssh keys
+```bash
+curl -X GET -H 'Content-Type: application/json' \
+-H 'Authorization: Bearer '$TOKEN'' \
+"https://api.digitalocean.com/v2/account/keys" | jq
+```
+
 ### install with curl
 ```bash
 curl -X POST -H 'Content-Type: application/json' \
@@ -12,7 +26,7 @@ curl -X POST -H 'Content-Type: application/json' \
         "region":"sfo3",
         "image":"ubuntu-22-04-x64",
         "vpc_uuid":"'$vpc_uuid'"}' \
-    "https://api.digitalocean.com/v2/droplets"
+    "https://api.digitalocean.com/v2/droplets" | jq
 ```
 
 
@@ -34,10 +48,10 @@ doctl compute droplet create \
 ### connect
 ```bash
 ## use this if you connect with the default key
-ssh root@$virtual-machine-ip
+ssh root@$virtual_machine_ip
 
 ## use this if your key is another folder or other name
-ssh -i .ssh/$private_key_name root@$virtual-machine-ip
+ssh -i .ssh/$private_key_name root@$virtual_machine_ip
 ```
 
 
@@ -86,10 +100,10 @@ exit
 ### connect with the newUser
 ```bash
 # use this if you are connecting with the default ssh key
-ssh $newUser@$virtual-machine-ip
+ssh $newUser@$virtual_machine_ip
 
 # use this if you are connecting with other ssh key
-ssh -i .ssh/$private_key_name  $newUser@$virtual-machine-ip
+ssh -i .ssh/$private_key_name  $newUser@$virtual_machine_ip
 ```
 
 
@@ -104,17 +118,21 @@ systemctl status mysql
 
 # when proving mysql connection, it dont ask by password
 sudo mysql
+```
 
-mysql> SELECT user, authentication_string, plugin, host FROM mysql.user;
+### Inside the mysql client
+```sql
+SELECT user, authentication_string, plugin, host FROM mysql.user;
 
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '<NEW_PASSWORD>';
 
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '<NEW_COMPLICATED_PASSWORD>';
+FLUSH PRIVILEGES;
 
-mysql> FLUSH PRIVILEGES;
+exit;
+```
 
-mysql> exit
-
-
+### continue with the configuration of mysql in the droplet
+```bash
 # we must configure the database
 sudo mysql_secure_installation
 
@@ -126,6 +144,9 @@ mysql -u root -p
 ###
 ```sql
 
+SELECT VERSION();
+
+exit;
 ```
 
 ### connect again
@@ -133,14 +154,14 @@ mysql -u root -p
 mysql -u root -p
 ```
 
-### working with the new configuration
+### working with the new configuration to create a database user
 ```sql
-mysql> CREATE USER '<OTHER_USER>'@localhost IDENTIFIED BY '<NEW_COMPLICATED_PASSWORD>';
+CREATE USER '<DB_USER>'@localhost IDENTIFIED BY '<NEW_COMPLICATED_PASSWORD>';
 
 # SET PRIVILEGES ON ALL TABLES
-mysql> GRANT ALL PRIVILEGES ON *.* TO '<OTHER_USER>'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO '<DB_USER>'@'localhost' WITH GRANT OPTION;
 
-mysql> exit;
+exit;
 ```
 
 ###
@@ -150,7 +171,7 @@ mysql> exit;
 mysql -u root -p
 
 # or your other user
-mysql -u $otherUser -p
+mysql -u $db_user -p
 
 ```
 
@@ -230,18 +251,22 @@ sudo ufw allow 4000
 sudo ufw reload
 ```
 
-### test your application
+### test your application on your localhost
 ```bash
-curl "$virtual-machine-ip":4000
+curl "$virtual_machine_ip":4000
 ```
 
 ### modify authentication method in mysql
 ```bash
 mysql -u $otherUser -p
+```
 
-mysql> SELECT user, authentication_string, plugin FROM mysql.user;
+### in the database client
+```sql
+SELECT user, authentication_string, plugin FROM mysql.user;
 
-mysql> ALTER USER '<DATABASE_USER>'@'localhost' IDENTIFIED WITH mysql_native_password BY '<NEW_COMPLICATED_PASSWOED>';
+ALTER USER '<DB_USER>'@'localhost' IDENTIFIED 
+WITH mysql_native_password BY '<NEW_COMPLICATED_PASSWORD>';
 
 ```
 
