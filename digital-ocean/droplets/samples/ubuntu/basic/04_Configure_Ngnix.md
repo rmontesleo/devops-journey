@@ -1,0 +1,6 @@
+# Configure Nginx
+
+# Basic configuration
+
+
+

@@ -31,9 +31,9 @@ doctl compute droplet create \
 
 ### 
 ```bash
-ssh root@$virtualmachine-ip
+ssh root@$virtualmachine_ip
 
-ssh -i ~/.ssh/$sshKey root@$virtualmachine-ip
+ssh -i ~/.ssh/$sshKey root@$virtualmachine_ip
 ```
 
 ### 
