@@ -16,6 +16,10 @@ vim variables
 ```bash
 newUser="developer"
 ```
+### set variable to environment
+```bash
+source variables
+```
 
 ### Create your user
 ```bash

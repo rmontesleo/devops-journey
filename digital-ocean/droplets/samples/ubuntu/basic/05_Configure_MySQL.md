@@ -11,7 +11,7 @@
 cat /etc/os-release
 
 # find updates and install the updates in the system
-apt-get -y udate && apt-get -y upgrade
+apt-get -y update 
 
 # install mysql server
 sudo apt-get install mysql-server -y
@@ -45,6 +45,8 @@ exit;
 ```bash
 # we must configure the database
 sudo mysql_secure_installation
+
+#
 
 # we will be prompt by password
 mysql -u root -p
@@ -93,3 +95,7 @@ systemctl start mysql
 # verify the version of mysql
 mysqladmin -p -u root version
 ```
+
+## References
+
+- [How To Install MySQL on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-22-04)
