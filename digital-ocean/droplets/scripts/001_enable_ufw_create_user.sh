@@ -2,7 +2,7 @@
 
 # Update your system
 echo "###### Update the system ######"
-apt-get -y update && apt-get -y upgrade
+apt-get -y update
 
 # verify the allow programs in the firewall
 echo "###### Verify the allow programs in the firewall ######"

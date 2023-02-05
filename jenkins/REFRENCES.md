@@ -13,8 +13,12 @@
 ## Jenkings
 
 - [Jenkins User Documentation](https://www.jenkins.io/doc/)
+- [Java requirements ](https://www.jenkins.io/doc/administration/requirements/java/)
 - [Hardware Recommendations](https://www.jenkins.io/doc/book/scaling/hardware-recommendations/)
 - [GitHub Authentication](https://plugins.jenkins.io/github-oauth/)
+- [Install Jenkins on Linux Ubuntu/Debian](https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)
+- [Java 17 Preview is available in Jenkins 2.339+](https://www.jenkins.io/blog/2022/03/21/java17-preview-availability/)
+
 
 ## GitHub
 
