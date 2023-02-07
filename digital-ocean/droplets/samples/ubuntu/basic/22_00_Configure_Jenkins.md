@@ -48,6 +48,7 @@ sudo apt-get -y update
 # Install JRE
 sudo apt install -y default-jre
 
+# Install JDK
 sudo apt install -y default-jdk
 
 
