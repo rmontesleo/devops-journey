@@ -24,13 +24,16 @@ nvm install node --lts
 
 
 # verify node version
+echo "verify node version"
 node --version
 
 # verify npm version
+echo "verify npm version"
 npm --version
 
 
 # install pm2 to manage node projects
+echo "install pm2 to manage node projects"
 npm install pm2 -g
 
 # verify the verion of pm2
