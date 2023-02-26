@@ -399,6 +399,7 @@ sudo mv  k9s /usr/local/bin
 
 ### Minikube
 - [](https://minikube.sigs.k8s.io/docs/handbook/accessing/)
+- [](https://minikube.sigs.k8s.io/docs/tutorials/multi_node/)
 
 ### Azure
 - [](https://learn.microsoft.com/en-us/azure/aks/concepts-storage)
