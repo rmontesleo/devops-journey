@@ -362,6 +362,13 @@ kubectl delete -f 15-pod-secret.yaml
 
 ---
 
+### Install minikube
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+```
+
+
 ### Install Kubecolor
 ```bash
 wget https://github.com/hidetatz/kubecolor/releases/download/v0.0.25/kubecolor_0.0.25_Linux_x86_64.tar.gz
@@ -375,6 +382,8 @@ wget https://github.com/derailed/k9s/releases/download/v0.26.7/k9s_Linux_x86_64.
 tar -xzvf k9s_Linux_x86_64.tar.gz
 sudo mv  k9s /usr/local/bin
 ```
+
+
 
 
 ---
