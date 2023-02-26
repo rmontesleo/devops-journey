@@ -4,16 +4,31 @@
 ```bash
 export KUBECONFIG=$FULL_PATH/$KUBECONFIG_DOWNLOADED_FILE
 
+
+# get the different contexts in .kubeconfig
+# Lists your cluster name, user, and namespace
+kubectl config get-contexts
+
+# Display addresses of the control plane and cluster services
+kubectl cluster-info
+
+# Display the client and server k8s version
+kubectl version
+
+# List all nodes created in the cluster
 kubectl get nodes
 
 kubectl get nodes -o wide 
 
 kubectl --help
 
-# get the different contexts in .kubeconfig
-kubectl config get-contexts
-
 ```
+
+### TODO verify if the next topics could be executed with minikube, kind or other local k8s solution
+ - Volumes
+ - Load Balancer
+ - Ingress()
+
 
 
 ### namespaces
@@ -41,11 +56,18 @@ kubectl exec -it nginx -- sh
 
 kubectl delete pod nginx 
 
+kubectl get pods
+
 kubectl apply -f 02-pod.yaml
 
 kubectl get pod nginx
 
+kubectl exec -it nginx -- sh
+
+# get all the yaml of the pod
 kubectl get pod nginx -o yaml
+
+kubectl describe pod nginx
 
 kubectl delete pod nginx
 ```
@@ -56,6 +78,10 @@ kubectl delete pod nginx
 kubectl apply -f 03-deployment.yaml
 
 kubectl get pods
+
+kubectl get pods -o wide
+
+
 
 kubectl delete pod $some_pode_name
 
@@ -81,6 +107,7 @@ kubectl get pods -o wide
 ```
 
 ### StatefulSet Manifest:
+### StatefulSet is a deployment with a volume atteched to it. Usefull for databases.
 ```bash
 
 # Statefulset is like a volume in Docker. A directory or disk attach to some pod. Its required for Databases.
@@ -88,14 +115,17 @@ kubectl apply -f 05-statefulset-digital-ocean.yaml
 
 kubectl get pods -o wide
 
-kubectl describe pod $some_pode_name
+kubectl describe pod $some_steatefull_pod_name
 
-# persistent volume claim
+# persistent volume claim (pvc)
+# the pvc is a request from kubernetes to the cloud provider for a volume
 kubectl get pvc
 
 kubectl describe pvc $some_pvc_name
 
 kubectl get statefulsets
+
+kubectl describe sts $some_sts_name
 
 kubectl delete sts $some_sts_name
 
@@ -131,10 +161,11 @@ kubectl get all -o wide
 # shows the IPs of each pod, that match with the label hello . This label is defined in the service.
 kubectl describe svc hello
 
+kubectl get pods
 kubectl get pods -o wide
 
 
-kubectl delete pod $some_pode_name
+kubectl delete pod $some_balanced_pod_name
 kubectl get pods -o wide
 kubectl describe svc hello
 
@@ -143,6 +174,9 @@ kubectl exec -it ubuntu -- bash
 
 ### inside the pod
 ```bash
+cat /etc/os-release
+apt-get -y update
+apt install -y iputils-ping curl
 ping hello
 ```
 
@@ -159,9 +193,7 @@ kubectl exec -it ubuntu -- bash
 ## each time you will see different data from the pod
 
 curl http://hello:8080
-
 curl http://hello:8080
-
 curl http://hello:8080
 ```
 
@@ -207,6 +239,8 @@ kubectl describe svc hello
 
 # find for the load balancer IP
 kubectl get svc
+kubectl get svc -o wide
+
 
 # from localhost
 curl http://$load_balancer_ip:8080
@@ -217,6 +251,7 @@ curl http://$load_balancer_ip:8080
 
 ### Ingress
 ### TODO: Check again this part on the video
+### FIX : the ingress load balancer
 ```bash
 
 vim 10-hello-v1-v2-deployment-svc.yaml
@@ -228,6 +263,9 @@ kubectl get all -o wide
 
 # the ingress service create a acces of the service using the path
 # for this sammple is required that nginx is installed on Digital Ocean
+
+# Go to k8s cluster, in market place and find to install  NGINX Ingress COntroller app. Minimum a Cluster with 2 nodes is required
+
 vim 11-hello-ingress.yaml
 
 
@@ -237,8 +275,10 @@ kubectl -n ingress-nginx get pods
 
 kubectl apply -f 11-hello-ingress.yaml
 
+# show the resources of typ ingress
 kubectl get ing
 
+# get the public ip from LoadBalance
 kubectl -n ingress-nginx get svc
 
 curl http://$public_load_balancer_ip/
@@ -351,3 +391,34 @@ sudo mv  k9s /usr/local/bin
 - [stern releases](https://github.com/stern/stern/releases)
 
 
+### Linux
+- [](https://linuxconfig.org/ping-command-not-found-on-ubuntu-20-04-focal-fossa-linux)
+- [](https://www.cyberciti.biz/faq/how-to-install-curl-command-on-a-ubuntu-linux/)
+
+
+
+### Minikube
+- [](https://minikube.sigs.k8s.io/docs/handbook/accessing/)
+
+### Azure
+- [](https://learn.microsoft.com/en-us/azure/aks/concepts-storage)
+- [](https://learn.microsoft.com/en-us/azure/aks/azure-csi-disk-storage-provision)
+- [](https://arunksingh16.medium.com/azure-storageclass-in-azure-kubernetes-service-aks-5167c4e7682)
+
+
+### Digital Ocean
+- [](https://docs.digitalocean.com/tutorials/)
+- [] (https://docs.digitalocean.com/products/billing/billing-alerts/)
+- [](https://www.digitalocean.com/community/tutorials?q=kubernetes&hits_per_page=12)
+- [](https://docs.digitalocean.com/tutorials/enable-push-to-deploy/)
+- [](https://marketplace.digitalocean.com/apps/nginx-ingress-controller)
+
+
+### Linode
+
+- [](https://www.linode.com/community/questions/19381/does-linodes-platform-enable-setting-a-billing-alert)
+- [](https://www.linode.com/docs/guides/deploy-volumes-with-the-linode-block-storage-csi-driver/)
+
+
+### Microservices
+- [] (https://medium.com/globant/load-balance-microservices-using-kubernetes-minikube-88b78dae4796)
