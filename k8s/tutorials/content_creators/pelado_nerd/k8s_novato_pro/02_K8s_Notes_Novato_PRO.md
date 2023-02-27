@@ -81,7 +81,11 @@ kubectl get pods
 
 kubectl get pods -o wide
 
-
+kubectl scale deployment nginx-deployment --replicas=1
+kubectl scale deployment nginx-deployment --replicas=3
+kubectl scale deployment nginx-deployment --replicas=10
+kubectl scale deployment nginx-deployment --replicas=18
+kubectl scale deployment nginx-deployment --replicas=3
 
 kubectl delete pod $some_pode_name
 
@@ -179,8 +183,7 @@ kubectl exec -it ubuntu -- bash
 ### inside the pod
 ```bash
 cat /etc/os-release
-apt-get -y update
-apt install -y iputils-ping curl
+apt-get -y update && apt install -y iputils-ping curl
 ping hello
 ```
 
@@ -221,9 +224,9 @@ kubectl get nodes -o wide
 
 
 # from the local host
-curl http://$public_node_ip_node01:3000
-curl http://$public_node_ip_node02:3000
-curl http://$public_node_ip_node03:3000
+curl http://$public_node_ip_node01:30000
+curl http://$public_node_ip_node02:30000
+curl http://$public_node_ip_node03:30000
 
 kubectl delete -f 08-hello-deployment-svc-nodePort.yaml
 
@@ -441,6 +444,7 @@ sudo mv  k9s /usr/local/bin
 
 ### Linode
 
+- [Understanding Kubernetes](https://www.linode.com/content/kubernetes-guide-pdf/)
 - [](https://www.linode.com/community/questions/19381/does-linodes-platform-enable-setting-a-billing-alert)
 - [](https://www.linode.com/docs/guides/deploy-volumes-with-the-linode-block-storage-csi-driver/)
 
