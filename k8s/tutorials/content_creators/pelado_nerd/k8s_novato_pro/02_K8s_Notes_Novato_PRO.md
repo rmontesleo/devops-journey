@@ -129,7 +129,7 @@ kubectl describe sts $some_sts_name
 
 kubectl delete sts $some_sts_name
 
-kubectl get some_pvc_name
+kubectl get $some_pvc_name
 
 kubectl delete pvc $some_pvc_name
 
@@ -150,6 +150,10 @@ kubectl delete pvc $some_pvc_name
 
 ### K8s Services: Cluster IP
 ```bash
+
+# create a basic ubuntu pod
+kubectl run ubuntu-demo --image=ubuntu -it -- bash
+
 vim 06-randompod.yaml
 kubectl apply -f 06-randompod.yaml
 
@@ -271,7 +275,11 @@ vim 11-hello-ingress.yaml
 
 kubectl get ns
 
+kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx
+
 kubectl -n ingress-nginx get pods
+
+kubectl -n ingress-nginx get pods -o wide
 
 kubectl apply -f 11-hello-ingress.yaml
 
@@ -280,6 +288,9 @@ kubectl get ing
 
 # get the public ip from LoadBalance
 kubectl -n ingress-nginx get svc
+
+#
+kubectl get svc -n ingress-nginx
 
 curl http://$public_load_balancer_ip/
 
@@ -391,11 +402,8 @@ sudo mv  k9s /usr/local/bin
 ## References
 
 - [Kubectl plugins available](https://krew.sigs.k8s.io/plugins/)
-
 - [kubecolor](https://github.com/hidetatz/kubecolor)
-
 - [kubecolor releases](https://github.com/hidetatz/kubecolor/releases)
-
 - [stern](https://github.com/stern/stern)
 - [stern releases](https://github.com/stern/stern/releases)
 
@@ -404,6 +412,13 @@ sudo mv  k9s /usr/local/bin
 - [](https://linuxconfig.org/ping-command-not-found-on-ubuntu-20-04-focal-fossa-linux)
 - [](https://www.cyberciti.biz/faq/how-to-install-curl-command-on-a-ubuntu-linux/)
 
+
+### Kubernetes
+
+- [Install and Set Up kubectl on Linux](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+- [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/#create-a-daemonset)
+
+- [Fire up an interactive bash Pod within a Kubernetes cluster](https://gc-taylor.com/blog/2016/10/31/fire-up-an-interactive-bash-pod-within-a-kubernetes-cluster)
 
 
 ### Minikube
@@ -421,7 +436,7 @@ sudo mv  k9s /usr/local/bin
 - [] (https://docs.digitalocean.com/products/billing/billing-alerts/)
 - [](https://www.digitalocean.com/community/tutorials?q=kubernetes&hits_per_page=12)
 - [](https://docs.digitalocean.com/tutorials/enable-push-to-deploy/)
-- [](https://marketplace.digitalocean.com/apps/nginx-ingress-controller)
+- [NGINX Ingress Controller](https://marketplace.digitalocean.com/apps/nginx-ingress-controller)
 
 
 ### Linode
@@ -432,3 +447,8 @@ sudo mv  k9s /usr/local/bin
 
 ### Microservices
 - [] (https://medium.com/globant/load-balance-microservices-using-kubernetes-minikube-88b78dae4796)
+
+
+### Docker Hub
+
+- [digitalocean/do-agent](https://hub.docker.com/r/digitalocean/do-agent/tags)
