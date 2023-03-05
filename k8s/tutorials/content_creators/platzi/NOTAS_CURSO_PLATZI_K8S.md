@@ -368,10 +368,10 @@ kubectl get pod $pod_name -o yaml
 ## use the flag dry-run to generate the yaml of the pod or deployment
 
 # create the yaml of a pod
-kubectl run --dry-run=true -o yaml pingpong --image=alpine -- ping 1.1.1.1
+kubectl run --dry-run=client -o yaml pingpong --image=alpine -- ping 1.1.1.1
 
 # create the yaml of a deployment
-kubectl create deployment --dry-run=true -o yaml pingpong --image=alpine -- ping 1.1.1.1
+kubectl create deployment --dry-run=client -o yaml pingpong --image=alpine -- ping 1.1.1.1
 
 ```
 
@@ -381,7 +381,53 @@ kubectl create deployment --dry-run=true -o yaml pingpong --image=alpine -- ping
 ## Balanceo de carga y service discovery
 
 
-### 16/33:
+### 16/33: Accediendo a nuestros PODS a través de servicios
+
+
+El tipo de servicio en Kubernetes pueden ser de cuatro formas diferentes:
+
+- **Cluster IP**: Una IP virtual es asignada para el servicio
+- **NodePort**: Un puerto es asignado para el servicio en todos los nodos
+- **Load Balancer**: Un balanceador externo es provisionado para el servicio. Solo disponible cuando se usa un servicio con un balanceador
+- **ExternalName**: Una entrada de DNS manejado por CoreDNS
+
+
+####
+```bash
+
+# if using minikube 
+minikube start  --vm-driver=docker --nodes 6
+
+# this cluster will fail because the image is wrong
+kubectl create deployment httpenv --image jpetazzo/httpenc
+
+# see the details of error to see what happend
+kubectl describe pod $pod_name
+
+kubectl delete deploy httpenv
+
+
+# use the right image
+kubectl create deployment httpenv --image jpetazzo/httpenc
+
+```
+
+
+### get pod info, service ip
+```bash
+# Curl al primer POD
+curl http://$(kubectl get po -l app=httpenv -o jsonpath="{.items[0].status.podIP}"):8888 | jq ""
+
+#Curl al service
+curl http://$(kubectl get service/httpenv -o jsonpath='{.spec.clusterIP}'):8888 | jq ""
+
+#Ciclo para revisar el Curl extrayendo cual sea la IP 
+for i in $(seq 10); do curl -s http://$(kubectl get service/httpenv -o jsonpath='{.spec.clusterIP}'):8888 | jq ".HOSTNAME"; done
+
+```
+
+
+
 
 
 ### 17/33:
