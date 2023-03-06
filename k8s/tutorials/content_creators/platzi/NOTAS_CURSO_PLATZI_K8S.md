@@ -408,12 +408,36 @@ kubectl delete deploy httpenv
 
 
 # use the right image
-kubectl create deployment httpenv --image jpetazzo/httpenc
+kubectl create deployment httpenv --image jpetazzo/httpenv
+
+
+
+kubectl scale deployment httpenv --replicas=10
+
+kubectl get pods -o wide --selector app=httpenv
+
+
+curl http://$pod_ip:8888
+
+curl http://$pod_ip:8888 | jq ""
+
+# kubectl create a service of type ClusterIP
+kubectl expose deployment httpenv --port=8888 
+
+curl http://$cluster_ip:8888
+
+curl http://$cluster_ip:8888 | jq ""
+
+curl http://$cluster_ip:8888 | jq "".HOSTNAME
+
+for i in $(seq 10); do curl -s http://$cluster_ip:8888 | jq .HOSTNAME; done
+
 
 ```
 
 
-### get pod info, service ip
+
+#### get pod info, service ip ( from platzi student)
 ```bash
 # Curl al primer POD
 curl http://$(kubectl get po -l app=httpenv -o jsonpath="{.items[0].status.podIP}"):8888 | jq ""
@@ -427,26 +451,147 @@ for i in $(seq 10); do curl -s http://$(kubectl get service/httpenv -o jsonpath=
 ```
 
 
+### 17/33: Enrutando el tráfico utilizando servicios (CHECK AGAIN THIS CLASS)
+
+```bash
+# iptables: see different iptables, in this case nat and list the output rules
+sudo iptables -t nat -L OUTPUT
+
+# this inside the cluster the the nat rules list kube-services without names 
+sudo iptables -t nat -nL KUBE-SERVICES
+
+sudo iptables -t nat -nl KUBE-SVC-$SOME_SERVICE_ID
+
+
+kubectl describe service httpenv
+
+```
 
 
 
-### 17/33:
+
+### 18/33: Desplegando nuestra app en k8s
 
 
-### 18/33:
+-[DOcker Image](https://hub.docker.com/u/dockercoins)
+
+```bash
+kubectl create deployment redis --image=redis
+
+kubectl create deployment hasher --image=dockercoins/hasher:v0.1
+
+kubectl create deployment rng --image=dockercoins/rng:v0.1
+
+kubectl create deployment webui --image=dockercoins/webui:v0.1
+
+kubectl create deployment worker --image=dockercoins/worker:v0.1
+
+kubectl get pods
+
+kubectl logs $worker_pod_id
+
+kubectl expose deployment redis --port 6379
+
+kubectl expose deployment rng --port 80
+
+kubectl expose deployment hasher --port 80
+
+kubectl logs $worker_pod_id
+
+kubectl logs $worker_pod_id --tail 20 -f
+
+
+kubectl expose deploy webui --type=NodePort --port=80
+
+curl http://$node_public_ip:$webui_service_port
+
+
+# if you are using minikube
+minikube service webui --url
+
+# the url will be  http://127.0.0.1:$webui_service_port
+
+
+
+
+```
+
+- [Accessing apps](https://minikube.sigs.k8s.io/docs/handbook/accessing/)
 
 
 ---
 
 ## Escalando nuestra aplicación
 
-### 19/33:
+
+### Check again this class
+### 19/33: Exponiendo servicios interna y externamente (kubectl-proxy)
+
+- **kubectl-proxy**: es un proxy que corre foreground y nos permite acceder a la API de kubernetes de manera autenticada.
+- **kubectl port-forward** : nos permite realizar lo mismo que kubectl-proxy, pero accediendo a cualquier puerto del servicio expuesto en nuestro cluster
+
+#### 
+```bash
+#
+kubectl get svc kubernetes
+
+#  start a service check the ip and port to access this proxy
+kubecl proxy &
+
+# see the API
+curl http://$kube_proxy_ip:$kube_proxy_port
+
+#
+curl http://$kube_proxy_ip:$kube_proxy_port/version
+
+#
+kubectl proxy --help
 
 
-### 20/33:
+kubectl port-forward svc/redis  10000:6379 &
+
+# check this again
+telnet localhost 10000
+
+```
 
 
-### 21/33:
+### 20/33: Kubernetes dashboard (CHECK THIS AGAIN)
+
+- [On Securing the Kubernetes Dashboard](https://blog.heptio.com/on-securing-the-kubernetes-dashboard-16b09b1b7aca)
+
+
+####
+```bash
+cd curso-kubernetes/k8s/
+
+# apply a manifest to install k8s dashboard 
+kubectl apply -f kubernetes-dashboard.yaml
+
+# it wont appear in default namespace
+kubectl get services
+
+kubectl get ns
+kubectl get service -n kube-system
+
+kubectl edit serice kubernetes-dashboard -n kube-system
+```
+
+#### edit the service in yaml format, change the service from ClusterIP to NodePort
+```yaml
+type: NodePort
+```
+
+###
+```bash
+
+kubectl get service -n kube-system
+```
+
+
+### 21/33: Balanceo de carga y Daemon sets
+
+
 
 
 ### 22/33:
@@ -510,6 +655,8 @@ for i in $(seq 10); do curl -s http://$(kubectl get service/httpenv -o jsonpath=
 - [Curso de Kubernetes](https://platzi.com/cursos/k8s/)
 - [Slides del curso](https://static.platzi.com/media/public/uploads/platzi-curso-k8s_d86c22d7-2f5f-4e41-b0f2-f9360e15a173.pdf)
 - [GitHub Project](https://github.com/platzi/curso-kubernetes)
+-[DOcker Image](https://hub.docker.com/u/dockercoins)
+
 - [Play with Docker](https://labs.play-with-docker.com/)
 - [Play with Kubernetes](https://labs.play-with-k8s.com/)
 - [Creating a cluster with kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
@@ -523,6 +670,8 @@ for i in $(seq 10); do curl -s http://$(kubectl get service/httpenv -o jsonpath=
 - [Deploy a sample application](https://docs.aws.amazon.com/eks/latest/userguide/sample-deployment.html)
 - [Kubernetes Examples](https://github.com/kubernetes/examples)
 - [Kubernetes Examples guestbook-go](https://github.com/kubernetes/examples/tree/master/guestbook-go)
+
+- [Accessing apps](https://minikube.sigs.k8s.io/docs/handbook/accessing/)
 
 
 ## Solving Problems
