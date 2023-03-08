@@ -591,13 +591,158 @@ kubectl get service -n kube-system
 
 ### 21/33: Balanceo de carga y Daemon sets
 
+```bash
+
+# see the deployment definition of rng 
+kubectl get deploy rng -o yaml
+
+kubectl get deploy rng -o yaml  > rng.yaml
+
+# do some changes in this file
+vim rng.yaml
+```
+
+#### original 
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2023-03-06T14:18:10Z"
+  generation: 1
+  labels:
+    app: rng
+  name: rng
+  namespace: default
+  resourceVersion: "10068"
+  uid: 3a33870e-869b-49bb-8d56-1767c30bc0c6
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: rng
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: rng
+    spec:
+      containers:
+      - image: dockercoins/rng:v0.1
+        imagePullPolicy: IfNotPresent
+        name: rng
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2023-03-06T14:18:10Z"
+```
+
+### Changing to DaemonSet and remove the status fields
+```yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: rng
+  name: rng
+  namespace: default
+  resourceVersion: "10068"
+spec:  
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: rng
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: rng
+    spec:
+      containers:
+      - image: dockercoins/rng:v0.1
+        imagePullPolicy: IfNotPresent
+        name: rng
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+
+```
+
+```bash
+# use the validate flag to allow deploy the yaml
+kubectl apply -f rng.yaml --validate=false
+
+kubectl get pods -o wide 
+
+# chech the label app=rng, it allows the load balancing
+kubectl describe svc rng
+
+kubectl get pods --selector app=rng -o wide
+
+kubectl delete pod $original_rng_pod
+
+# you will see the pod is recreated
+kubectl get pods --selector app=rng -o wide
+
+# now remove the label of one specific pod
+kubectl label pod $second_from_original_rng_pod app-
+
+# kubectl creates a new one
+kubectl get pods --selector app=rng -o wide
 
 
+```
 
-### 22/33:
+### 22/33: Despliegues controlados
+
+```bash
+kubectl get deploy -o json
+
+
+# 
+kubectl get deploy -o json \
+| jq ".items[] | {name: .metadata.name , maxSurge:.spec.strategy.rollingUpdate.maxSurge, maxUnavailable: .spec.strategy.rollingUpdate.maxUnavailable    }"
+
+
+```
+
+
 
 
 ### 23/33:
+
+
 
 ---
 
@@ -678,6 +823,6 @@ kubectl get service -n kube-system
 
 
 - [Cannot copy or paste commands in labs.play-with-kubernetes free intance](https://stackoverflow.com/questions/69718912/cannot-copy-or-paste-commands-in-labs-play-with-kubernetes-free-intance)
-- []()
+- [Kubectl Export is deprecated . Any alternative](https://stackoverflow.com/questions/61392206/kubectl-export-is-deprecated-any-alternative)
 - []()
 - []()
