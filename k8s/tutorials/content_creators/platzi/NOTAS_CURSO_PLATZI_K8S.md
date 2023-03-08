@@ -727,6 +727,8 @@ kubectl get pods --selector app=rng -o wide
 ### 22/33: Despliegues controlados
 
 ```bash
+# Using rolling updates
+
 kubectl get deploy -o json
 
 
@@ -734,13 +736,162 @@ kubectl get deploy -o json
 kubectl get deploy -o json \
 | jq ".items[] | {name: .metadata.name , maxSurge:.spec.strategy.rollingUpdate.maxSurge, maxUnavailable: .spec.strategy.rollingUpdate.maxUnavailable    }"
 
+# see the initial state of all the deployment
+kubectl get deployment
+
+#
+kubectl get pods -o wide --selector app=worker -w
+
+# scale de deployment
+kubectl scale deployment worker --replicas 10
+
+
+# see the next state of all the deployment
+kubectl get deployment
+
+# try to update with a wrong version
+kubectl set image deploy worker worker=dockercoints/worker:v0.2    
+
+# update the version image of the deployment
+kubectl set image deploy worker worker=dockercoins/worker:v0.2
+
+# try to update to other version
+kubectl set image deploy worker worker=dockercoins/worker:v0.3
+
+# return to previous version
+kubectl rollout undo deploy worker
+
+# verify your deployment
+kubectl get deploy
+
+kubectl edit deploy worker
+```
+
+#### initial strategy state
+```yaml
+ strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+```
+
+#### new state, only 1 pod can be offline, create new,  one bye one
+```yaml
+strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+```
+
+#### verify the new status
+```bash
+kubectl rollout status deployment worker
+
+
+# apply again the wrong version
+kubectl set image deploy worker worker=dockercoins/worker:v0.3
+
+# you will see 10 active pods and 1 failed, trying to create
+kubectl get pods -o wide --selector app=worker 
+
+# rollback to previous  version
+kubectl rollout undo deploy worker
 
 ```
 
 
+### 23/33: Healthchecks (VERIFY AGAIN THIS TOPIC)
+
+**Healthchecks**: es un organismo que tiene kubernetes para saber si nuestra aplicación está funcionando de una manera correcta para saber si debe removerla o reiniciarla al no estar en un estado deseable.
+
+####
+```bash
+kubectl get all -o wide
+
+# edit redis deployment
+kubectl edit deploy redis
+```
+
+#### original
+```yaml
+ containers:
+      - image: redis
+        imagePullPolicy: Always
+        name: redis        
+        resources: []    
+```
 
 
-### 23/33:
+#### with the change
+```yaml
+ containers:
+      - image: redis
+        imagePullPolicy: Always
+        name: redis
+        livenessProbe:
+          exec:
+            command: [ "redis-cli", "ping" ]
+        resources: []    
+```
+
+####
+```bash
+
+kubectl get pods -o wide
+
+kubectl get pod $redis_pod
+
+kubectl describe pod $reis_pod
+
+# edit again redis deployment
+kubectl edit deploy redis
+```
+
+#### verifying the redis deployment
+```yaml
+containers:
+      - image: redis
+        imagePullPolicy: Always
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          failureThreshold: 3
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: redis
+        resources: {}
+```
+
+#### edit the deployment
+```yaml
+containers:
+      - image: redis
+        imagePullPolicy: Always
+        livenessProbe:
+          exec:
+            command:
+            - chanchito
+            - asdfagdgh
+          failureThreshold: 3
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: redis
+        resources: {}
+```
+
+#### 
+```bash
+kubectl describe pod $redis_pod
+
+kuectl exec -it $redis_pod -- bash
+```
+
 
 
 
@@ -749,39 +900,39 @@ kubectl get deploy -o json \
 ## Optimizando el uso de nuestro cluster
 
 
-### 24/33:
+### 24/33: Gestionar stacks con Helm
 
 
-### 25/33:
+### 25/33: Gestionando la configuracion aplicativas utilizando Config Maps
 
 
-### 26/33:
+### 26/33: Volumenes
 
 ---
 
 ## Autorizacion y Namespaces
 
 
-### 27/33:
+### 27/33: Introduccion a namespaces
 
 
-### 28/33:
+### 28/33: Despliegue multiples instancias de las misma aplicacion en un solo cluster
 
 
-### 29/33:
+### 29/33: Autenticacion y autorizacion
 
 
-### 30/33:
+### 30/33: Service account tokens
 
 
-### 31/33:
+### 31/33: RBAC
 
 ---
 
 ## Fin del curso
 
 
-### 32/33:
+### 32/33: Recomendaciones para implementar Kubernetes en tu organizacion o proyectos
 
 
 
@@ -789,7 +940,7 @@ kubectl get deploy -o json \
 
 ## Bonus
 
-### 33/ 33
+### 33/ 33: Clase en vivo: workflows de Kubernetes usando git
 
 
 
