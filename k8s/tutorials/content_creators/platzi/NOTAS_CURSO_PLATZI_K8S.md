@@ -893,14 +893,79 @@ kuectl exec -it $redis_pod -- bash
 ```
 
 
-
-
 ---
 
 ## Optimizando el uso de nuestro cluster
 
 
-### 24/33: Gestionar stacks con Helm
+### 24/33: Gestionar stacks con Helm  ( Check again this class and update the steps to install helm  and install charts)
+
+#### Commandos from the class
+```bash
+// Instalar helm
+curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+
+// Verificar si tenemos helm instalado
+helm
+
+// Configurar helm
+helm init
+
+// Verificar si Tiller está instalado
+kubectl get pods -n kube-system
+
+// Dar permisos a helm
+kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+
+// Buscar paquetes
+helm search
+
+// Ejemplo de cómo instalar un paquete
+helm search prometheus
+helm inspect stable/prometheus | less
+helm install stable/prometheus --set server.service.type=NodePort --set server.persistentVolume.enabled=false
+
+// Obtener servicios
+kubectl get svc
+
+// Crear helm chart
+helm create dockercoins
+cd dockercoins
+mv templates/ templates-old
+mkdir templates
+cd ..
+kubectl get -o yaml --export deployment worker
+```
+
+#### script
+```bash
+while read kind name; do
+kubectl get -o yaml --export $kind $name > dockercoins/templates/$name-$kind.yaml
+done <<EOF
+deployment worker
+deployment hasher
+daemonset rng
+deployment webui
+deployment redis
+service hasher
+service rng
+service webui
+service redis
+EOF
+```
+
+####
+- [Installing Helm](https://helm.sh/docs/intro/install/)
+- [Quick Start with Helm](https://helm.sh/docs/intro/quickstart/)
+
+
+####
+```bash
+minikube service list
+
+helm create dockercoins
+mv dockercoins/templates/  dockercoins/templates-old
+```
 
 
 ### 25/33: Gestionando la configuracion aplicativas utilizando Config Maps
@@ -968,6 +1033,13 @@ kuectl exec -it $redis_pod -- bash
 - [Kubernetes Examples guestbook-go](https://github.com/kubernetes/examples/tree/master/guestbook-go)
 
 - [Accessing apps](https://minikube.sigs.k8s.io/docs/handbook/accessing/)
+- [GitHub Helm](https://github.com/helm/helm)
+- [Helm. The package manager for Kubernetes](https://helm.sh/)
+- [Installing Helm](https://helm.sh/docs/intro/install/)
+- [Prometheus](https://prometheus.io/)
+- [ArtifactHub: Prometheus](https://artifacthub.io/packages/helm/prometheus-community/prometheus)
+- [Helm 3.0.0 has been released!](https://helm.sh/blog/helm-3-released/)
+- [Setup Prometheus and Grafana monitoring on Kubernetes cluster using Helm](https://medium.com/globant/setup-prometheus-and-grafana-monitoring-on-kubernetes-cluster-using-helm-3484efd85891)
 
 
 ## Solving Problems
@@ -975,5 +1047,5 @@ kuectl exec -it $redis_pod -- bash
 
 - [Cannot copy or paste commands in labs.play-with-kubernetes free intance](https://stackoverflow.com/questions/69718912/cannot-copy-or-paste-commands-in-labs-play-with-kubernetes-free-intance)
 - [Kubectl Export is deprecated . Any alternative](https://stackoverflow.com/questions/61392206/kubectl-export-is-deprecated-any-alternative)
-- []()
+
 - []()
