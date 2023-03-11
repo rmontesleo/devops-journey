@@ -970,27 +970,272 @@ mv dockercoins/templates/  dockercoins/templates-old
 
 ### 25/33: Gestionando la configuracion aplicativas utilizando Config Maps
 
+Tenemos diferentes formas de configurar nuestras aplicaciones:
+
+- Argumentos por línea de comandos
+- Variables de entorno (env map en el spec)
+- Archivos de configuración (config maps)
+  – Guardan tanto archivo como valores clave/valor
+
+
+####
+```bash
+# 
+cd curso-kubernetes
+
+#
+kubectl create configmap haproxy --from-file=haproxy.cfg
+
+#
+kubectl get configmap haproxy -o yaml | less
+
+#
+cat haproxy.yaml
+
+# create the new pod
+kubectl apply -f haproxy.yaml
+
+
+kubectl get pod haproxy -o wide
+
+#
+curl http://$pod_ip
+
+#
+kubectl create configmap registry --from-literal=http.addr=0.0.0.0:80
+
+cd curso-kubernetes
+
+cat registry.yaml
+
+kubectl apply -f registry.yaml
+
+kubectl get pods -o wide  
+
+curl http://$pod_ip:80/v2 
+
+
+```
+
+
 
 ### 26/33: Volumenes
+
+Un `volumen` nos va a permitir compartir archivos entre diferentes pods o en nuestro host. Estos se usan para que los archivos vivan a lo largo del tiempo y el pod pueda seguir haciendo uso de estos archivos de logs, archivos de configuración o cualquier otro.
+
+`Docker`:
+- Permiten compartir información entre contenedores del mismo host
+- Permiten acceder a mecanismo de storage
+- Docker config y docker secrets
+
+`Kubernetes`:
+- Permiten compartir información entre contenedores del mismo pod
+- Permite acceder también a mecanismo de storage
+- Se utilizan para el manejo de secrets y configuraciones
+
+`Ciclo de Vida`
+-El volumen se crea cuando el pod se crea.
+  – Esto aplica principalmente para los volúmenes emptyDir.
+  – Para otro tipo se conectan en vez de crearse.
+- Un volumen se mantiene aún cuando se reinicie el contenedor.
+- Un volumen se destruye cuando el pod se elimina.
+
+####
+```bash
+cd curso-kubernetes
+cat nginx-with-volume.yaml
+kubectl apply -f nginx-with-volume.yaml
+
+kubectl get pods
+kubectl get pod nginx-with-volume
+kubectl describe pod nginx-with-volume
+
+kubectl get pods -o wide
+curl http://$nginx_ip
+
+
+```
+
 
 ---
 
 ## Autorizacion y Namespaces
 
 
-### 27/33: Introduccion a namespaces
+### 27/33: Introduccion a namespaces (Check again)
+
+- [kube-ps1: Kubernetes prompt for bash and zsh](https://github.com/jonmosco/kube-ps1)
+
+```bash
+kubectl create namespace blue
+
+kubectl -n blue get svc
+
+kubectl get svc
+
+kubectl config get-contexts 
+
+kubectl config set-context --current --namespace=blue
+
+kubectl config get-contexts
+
+```
 
 
-### 28/33: Despliegue multiples instancias de las misma aplicacion en un solo cluster
+### 28/33: Despliegue multiples instancias de las misma aplicacion en un solo cluster (Check again)
+
+- Los namespaces no proveen aislación de recursos
+- Un pod en un namespace A puede comunicarse con otro namespace B
+- Un pod en el namespace default puede comunicarse con otro en el kube-system
+
+```bash
+helm install dockercoins
+
+kubectl get svc
+kubectl get namespace
+
+kubectl config set-context --current --namespace=blue
+kubectl get pods -o wide
+helm install dockercoins
+
+kubectl get pods
+kubectl get svc
+
+```
 
 
-### 29/33: Autenticacion y autorizacion
+
+### 29/33: Autenticacion y autorizacion (Check again)
+
+`Autenticación` es el método por el cual Kubernetes deja ingresar a un usuario.
+`Autorización` es el mecanismo para que un usuario tenga una serie determinada de permisos para realizar ciertas acciones sobre el cluster.
+
+- Cuando el API server recibe un request intenta autorizarlo con uno o más de uno de los siguientes métodos: Certificados TLS, Bearer Tokens, Basic Auth o Proxy de autenticación.
+- Si cualquier método rechaza la solicitud, se devuelve un 401.
+- Si el request no es aceptado o rechazado, el usuario es anónimo.
+- Por defecto el usuario anónimo no puede hacer ninguna operación en el cluster.
 
 
-### 30/33: Service account tokens
+```bash
+kubectl get all -o wide --all-namespaces
+
+kubectl get all -o wide -A
+
+#
+kubectl config view --raw -o json | jq -r .users[0].user[\"client-certificate-data\"]
+
+#
+kubectl config view --raw -o json | jq -r .users[0].user[\"client-certificate-data\"] | base64 -d
+
+#
+kubectl config view --raw -o json | jq -r .users[0].user[\"client-certificate-data\"] | base64 -d | openssl x509 =text
+
+#
+kubectl config view --raw -o json | jq -r .users[0].user[\"client-certificate-data\"] | base64 -d | openssl x509 =text | grep Subject
+
+```
 
 
-### 31/33: RBAC
+### 30/33: Service account tokens (Check again)
+
+`Service Account Tokens` es un mecanismo de autenticación de kubernetes y vive dentro de la plataforma, nos permite dar permisos a diferentes tipos de usuarios.
+
+- Existen en la API de kubernetes. kubectl get serviceaccount.
+- Pueden crearse, eliminarse y actualizarse.
+- Un service account está asociado a secretos kubectl get secrets.
+- Son utilizados para otorgar permisos a aplicaciones y servicios.
+
+```bash
+kubectl get sa
+kubectl get serviceaccounts
+
+kubectl get sa default -o yaml
+
+kubectl get sa default -o json | jq -r .secrets[0].name
+
+kubectl get secret $defaul_token_name -o yaml
+
+token=$( kubectl get secret $defaul_token_name -o json | jq -r .data.token | base64 -d )
+
+kubectl get pods -n default
+
+kuectl get svc -n default
+
+curl -k https://$K8S_SERVICE_IP
+
+curl -k https://$K8S_SERVICE_IP -H "Authorization: Bearer $token"
+
+```
+
+
+### 31/33: RBAC (Check again)
+
+
+`Role based access control(RBAC)` es un mecanismo de kubernetes para gestionar roles y la asociación de estos a los usuarios para delimitar las acciones que pueden realizar dentro de la plataforma.
+
+- Un rol es un objeto que contiene una lista de rules
+- Un rolebiding asocia un rol a un usuario
+- Pueden existir usuarios, roles y rolebidings con el mismo nombre
+- Una buena práctica es tener un 1-1-1 bidings
+- Los Cluster-scope permissions permiten definir permisos a nivel de cluster y no solo namespace
+- Un pod puede estar asociado a un service-accoun
+
+```bash
+kubectl create sa viewer
+
+kubectl get sa
+
+kubectl create rolebingding viewercanvirew --clusterrole=view --serviceaccount=default:viewer
+
+kubectl run eyepod --rm -it --restart=Never --serviceaccount=viewer --image=alpine
+```
+
+#### inside the pod
+```bash
+curl https://storage.googleapis.com/kubernetes-release/release/stable.txt
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/linux/amd64/kubectl
+
+chmod -x ./kubectl
+
+kubectl get all 
+
+./kubectl create deployment testrab --image nginx
+
+./kubectl auth can-i list nodes
+
+./kubectl auth can-i create pods
+
+./kubectl auth can-i  get pods
+
+./kubectl auth can-i  list nodes --as kube-admin
+
+exit
+
+```
+
+```bash
+kubectl get clusterrolebindings -o yaml | grep -e kkuberenetes-admin -e system:masters
+
+kubectl describe clusterrolebing cluster-admin
+```
+
+### create the pod with a YAML file
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: eyedpod
+  labels:
+    purpose: demonstrate-serviceaccount-demo
+spec:
+  serviceAccountName: viewer
+  containers:
+  - name: serviceaccount-demo
+    image: alpine:3.9
+    command: ["sleep", "10000"]
+  restartPolicy: OnFailure
+```
 
 ---
 
@@ -999,6 +1244,37 @@ mv dockercoins/templates/  dockercoins/templates-old
 
 ### 32/33: Recomendaciones para implementar Kubernetes en tu organizacion o proyectos
 
+**Próximos pasos**
+
+- `Establece una cultura de containers en la organización`
+  – Escribir Dockerfiles para una aplicación
+  – Escribir compose files para describir servicios
+  – Mostrar las ventajas de correr aplicaciones en contenedores
+  – Configurar builds automáticos de imágenes
+  – Automatizar el CI/CD (staging) pipeline
+
+- `Developer Experience`: Si tienes una persona nueva, debe sentirse acompañada en este proceso de por qué usamos kubernetes y quieres mantener la armonía de ese proceso.
+
+- `Elección de un cluster de producción`: Hay alternativas como Cloud, Managed o Self-managed, también puedes usar un cluster grande o múltiples pequeños.
+
+- `Recordar el uso de namespaces`: Puedes desplegar varias versiones de tu aplicación en diferentes namespaces.
+
+- `Servicios con estados (stateful)`
+  – Intenta evitarlos al principio
+  – Técnicas para exponerlos a los pods (ExternalName, ClusterIP, Ambassador)
+  – Storage provider, Persistent volumens, Stateful set
+
+- `Gestión del tráfico Http`
+  – Ingress controllers (virtual host routing)
+
+- `Configuración de la aplicación`
+  – Secretos y config maps
+
+- `Stacks deployments`
+  – GitOps (infraestructure as code)
+  – Heml, Spinnaker o Brigade
+
+
 
 
 ---
@@ -1006,6 +1282,46 @@ mv dockercoins/templates/  dockercoins/templates-old
 ## Bonus
 
 ### 33/ 33: Clase en vivo: workflows de Kubernetes usando git
+
+
+`GitOps` es una práctica que gestiona toda la configuración de nuestra infraestructura y nuestras aplicaciones en producción a través de Git. Git es la fuente de verdad. Esto implica que todo proceso de infraestructura conlleva code reviews, comentarios en los archivos de configuración y enlaces a issues y PR.
+
+- Infraestructura como código
+- Mecanismo de convergencia
+- Uso de CI como fuente de verdad
+- Pull vs Push
+- Developers y operaciones(git)
+- Actualizaciones atómicas
+
+`GitOps` tomo tanta popularidad en la comunidad de DevOps por el impacto que genera.
+
+- Poder desplegar features nuevos rápidos
+- Reducir el tiempo para arreglar bugs
+- Generar el sentimiento de control y empoderamiento. Confidencia y control
+- 20 deploys por día
+- 80% en ahorro del tiempo para arreglar errores en producción
+
+- [Flux v1](https://github.com/fluxcd/flux)
+
+```bash
+kubectl get nodes
+
+kubectl get pods
+
+git clone git@github.com:weaveworks/flux.git
+
+cat flux/deploy/flux-deployment.yaml
+
+kubectl apply -f deploy/
+
+kubectl get pods
+
+kubectl logs deploy flux
+
+# copy the ssh key 
+
+```
+
 
 
 
@@ -1040,7 +1356,8 @@ mv dockercoins/templates/  dockercoins/templates-old
 - [ArtifactHub: Prometheus](https://artifacthub.io/packages/helm/prometheus-community/prometheus)
 - [Helm 3.0.0 has been released!](https://helm.sh/blog/helm-3-released/)
 - [Setup Prometheus and Grafana monitoring on Kubernetes cluster using Helm](https://medium.com/globant/setup-prometheus-and-grafana-monitoring-on-kubernetes-cluster-using-helm-3484efd85891)
-
+- [kube-ps1: Kubernetes prompt for bash and zsh](https://github.com/jonmosco/kube-ps1)
+- [Flux v1](https://github.com/fluxcd/flux)
 
 ## Solving Problems
 
