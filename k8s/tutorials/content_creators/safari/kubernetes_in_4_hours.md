@@ -461,7 +461,6 @@ kubectl get pods $some_pod_id -o yaml | less
 
 
 kubernetes in 4 hours
-
 git ops
 microservices and istio
 kubernetes in 3 weeks (march 10th)
