@@ -367,6 +367,12 @@ stages:
 
 - [Tech world with Nana and Azure DevOps](https://www.microsoft.com/en-us/dev-community/Event/Register?eventId=TechWorldwithNana_VgvSHbwHWnRA&ocid=aid3038567)
 
+- [Configure and pay for parallel jobs](https://learn.microsoft.com/en-us/azure/devops/pipelines/licensing/concurrent-jobs?view=azure-devops&tabs=ms-hosted#microsoft-hosted-cicd)
+
+- [Azure Pipelines](https://azure.microsoft.com/en-us/products/devops/pipelines/)
+
+- [What is Kubernetes?](https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-kubernetes/#resources)
+
 - [Azure Pipelines documentation](https://learn.microsoft.com/en-us/azure/devops/pipelines/?view=azure-devops&viewFallbackFrom=azure-devops%3FWT.mc_id%3Dmodinfra-74865-apedward)
 
 - [Azure Repos documentation](https://learn.microsoft.com/en-us/azure/devops/repos/?view=azure-devops&viewFallbackFrom=azure-devops%3FWT.mc_id%3Dmodinfra-74865-apedward)
@@ -378,3 +384,19 @@ stages:
 - [Create your first pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Ctfs-2018-2%2Cbrowser)
 
 - [Sign up for Azure DevOps](https://learn.microsoft.com/en-us/azure/devops/user-guide/sign-up-invite-teammates?toc=%2Fazure%2Fdevops%2Fget-started%2Ftoc.json&view=azure-devops)
+
+
+- [Get started with Azure Artifacts: Maven](https://learn.microsoft.com/en-us/azure/devops/artifacts/start-using-azure-artifacts?view=azure-devops&tabs=maven)
+
+- [Troubleshoot pipeline runs](https://learn.microsoft.com/en-us/azure/devops/pipelines/troubleshooting/troubleshooting?view=azure-devops)
+
+- [Billing FAQs](https://learn.microsoft.com/en-us/azure/devops/organizations/billing/billing-faq?view=azure-devops#user-assignment-based-billing)
+
+
+- [Add & use variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml)
+
+- [How to add Bash or PowerShell script to Azure DevOps pipeline](https://stackoverflow.com/questions/56059144/how-to-add-bash-or-powershell-script-to-azure-devops-pipeline)
+
+- [Parallel jobs in Azure DevOps](https://faun.pub/parallel-jobs-in-azure-devops-824e697bff18)
+
+- [Parallel jobs pricing in Azure DevOps](https://www.azuredevopsguide.com/parallel-jobs-pricing-in-azure-devops/)
