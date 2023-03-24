@@ -12,6 +12,7 @@
 - [Initial Server Setup with Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-12-04)
 - [How To Install Java with Apt on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-22-04#installing-specific-versions-of-openjdk)
 
+- [How to Provide User Data During Droplet Creation](https://docs.digitalocean.com/products/droplets/how-to/provide-user-data/)
 
 
 

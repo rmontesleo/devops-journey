@@ -1,0 +1,102 @@
+# azure-pipelines.yml
+# This Sample try to setup a K8s cluster in Digital Ocean
+# IMPORTANT !!!!!!   This Sample does not work yet...
+
+
+
+trigger:
+- main
+
+pool:
+    vmImage: 'ubuntu-latest'
+
+variables:
+- group: digital-ocean-variables-group
+- name: master_ip
+  value: $[variables.DROPLET_MASTER_NODE_IP]
+- name: worker01_ip
+  value: $[variables.DROPLET_WORKER_01_NODE_IP]
+- name: worker02_ip
+  value: $[variables.DROPLET_WORKER_02_NODE_IP]    
+- name: droplet_user
+  value: $[variables.DROPLET_USERNAME]
+- name: ssh_password
+  value: $[variables.DROPLET_USERPASSWORD]    
+
+stages:
+
+- stage: SetupK8sCluster
+  jobs:
+
+  - job: MasterInitialSetup
+    steps:
+    - task: DownloadSecureFile@1
+      name: sshKey
+      inputs:
+        secureFile: 'digital-ocean-key'
+    
+    - script: |
+        sudo chmod 400  $(sshKey.secureFilePath)
+        sshpass -p $(ssh_password) | ssh  -o StrictHostKeyChecking=no  -i $(sshKey.secureFilePath) $(droplet_user)@$(master_ip) "
+        git clone https://github.com/sandervanvugt/kube3weeks
+        cd kube3weeks
+        ./setup-container.sh
+        sudo systemctl status containerd
+        sudo ./setup-kubetools.sh
+        echo 'End of the script' "
+
+  - job: Worker01InitialSetup
+    steps:
+    - task: DownloadSecureFile@1
+      name: sshKey
+      inputs:
+        secureFile: 'digital-ocean-key'
+    
+    - script: |
+        sudo chmod 400 $(sshKey.secureFilePath)
+        sshpass -p $(ssh_password) | ssh -o StrictHostKeyChecking=no -i $(sshKey.secureFilePath) $(droplet_user)@$(worker01_ip) "
+        git clone https://github.com/sandervanvugt/kube3weeks
+        cd kube3weeks
+        ./setup-container.sh
+        sudo systemctl status containerd
+        sudo ./setup-kubetools.sh
+        echo 'End of the script' "      
+
+  - job: Worker02InitialSetup
+    steps:
+    - task: DownloadSecureFile@1
+      name: sshKey
+      inputs:
+        secureFile: 'digital-ocean-key'
+    
+    - script: |
+        sudo chmod 400  $(sshKey.secureFilePath)
+        sshpass -p $(ssh_password) | ssh  -o StrictHostKeyChecking=no  -i $(sshKey.secureFilePath) $(droplet_user)@$(worker02_ip) "
+        git clone https://github.com/sandervanvugt/kube3weeks
+        cd kube3weeks
+        ./setup-container.sh
+        sudo systemctl status containerd
+        sudo ./setup-kubetools.sh
+        echo 'End of the script' "
+
+
+- stage: SetupMasterNode
+  jobs:
+  - job: SetupKubeAdm
+    steps:
+    
+    - task: DownloadSecureFile@1
+      name: sshKey
+      inputs:
+        secureFile: 'digital-ocean-key'
+
+    - script: |
+        sudo chmod 400  $(sshKey.secureFilePath)
+        sshpass -p $(ssh_password) | ssh  -o StrictHostKeyChecking=no  -i $(sshKey.secureFilePath) $(droplet_user)@$(master_ip) "
+        sudo kubeadm init
+        mkdir -p $HOME/.kube
+        sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+        kubectl apply -f calico.yaml
+        echo 'End of the script' "
+
