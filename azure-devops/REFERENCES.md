@@ -28,6 +28,20 @@
 
 - [Azure Active Directory app manifest](https://learn.microsoft.com/en-us/azure/active-directory/develop/reference-app-manifest?WT.mc_id=Portal-Microsoft_AAD_RegisteredApps)
 
+---
+
+- [Skipping Tests with Maven](https://www.baeldung.com/maven-skipping-tests)
+
+- [Maven – How to skip unit test](https://mkyong.com/maven/how-to-skip-maven-unit-test/)
+
+- [Quickstart: Use Java and JDBC with Azure Database for PostgreSQL Flexible Server](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/connect-java?tabs=password)
+
+- [Deployment Best Practices](https://learn.microsoft.com/en-us/azure/app-service/deploy-best-practices#use-deployment-slots)
+
+- [AdventureWorks database for Azure Database for PostgreSQL Flexible Server](https://github.com/Azure-Samples/postgresql-samples-databases/tree/main/postgresql-adventureworks)
+
+---
+
 ## Microsoft
 - [Automate application deployments to Azure Spring Apps](https://learn.microsoft.com/en-us/azure/spring-apps/how-to-cicd?pivots=programming-language-java)
 
