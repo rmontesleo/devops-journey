@@ -1,0 +1,33 @@
+trigger:
+- main
+
+pool:
+    vmImage: 'ubuntu-latest'
+
+stages:
+
+- stage: BuildApp
+  jobs:
+  - job: BuildPushImage
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'ACR Demo'
+        repository: 'adodemo.azurecr.io'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(Build.BuildId)'
+
+- stage: DeployDev
+  jobs:
+  - job: DeployDev
+    steps:
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure'
+        appType: 'webAppContainer'
+        WebAppName: 'ADODemo-Dev'
+        DockerNamespace: 'ACR Demo'
+        DockerRepository: 'adodemo.azurecr.io'
+        DockerImageTag: '$(Build.BuildId)'

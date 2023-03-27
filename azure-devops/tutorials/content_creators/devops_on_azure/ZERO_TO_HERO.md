@@ -149,7 +149,7 @@ stages:
 
 ```
 
-### azure-pipelines.yml  (Quick pipeline, Version 4)
+### azure-pipelines.yml  (Quick pipeline, Version 3)
 ```yaml
 trigger:
 - main
@@ -262,7 +262,7 @@ stages:
 
 ```
 
-### azure-pipelines.yml  (Quick pipeline, Version 3)
+### azure-pipelines.yml  (Quick pipeline, Version 4)
 ```yaml
 trigger:
 - main

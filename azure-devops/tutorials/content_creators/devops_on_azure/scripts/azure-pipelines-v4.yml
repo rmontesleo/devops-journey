@@ -1,0 +1,80 @@
+trigger:
+- main
+
+pool:
+    vmImage: 'ubuntu-latest'
+
+variables:
+  IMAGE_REGISTRY_CONNECTON: 'ACR Demo'
+  IMAGE_REGISTRY: 'ADODemo'
+  IMAGE_REPOSITORY: 'adodemo.azurecr.io'
+  TAG: '$(Build.BuildId)' 	
+
+stages:
+
+- stage: BuildApp
+  jobs:	  
+  - job: BuildPushImage
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: '$(IMAGE_REGISTRY_CONNECTON)'
+        repository: '$(IMAGE_REPOSITORY)'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(TAG)'
+
+
+- stage: DeployDev
+  jobs:
+  - job: DeployDev
+    steps:
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure'
+        appType: 'webAppContainer'
+        WebAppName: 'ADODemo-dev'
+        DockerNamespace: '$(IMAGE_REGISTRY)'
+        DockerRepository: '$(IMAGE_REPOSITORY)'
+        DockerImageTag: '$(TAG)'
+
+- stage: DeployTest
+  condition: and( succeeded(), eq( variables['Build.Reason'], 'Schedule' )) 
+  jobs:
+  - job: DeployTest
+    steps:
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure'
+        appType: 'webAppContainer'
+        WebAppName: 'ADODemo-test'
+        DockerNamespace: '$(IMAGE_REGISTRY)'
+        DockerRepository: '$(IMAGE_REPOSITORY)'
+        DockerImageTag: '$(TAG)'
+
+- stage: DeployProd
+  jobs:
+  
+  - job: ApproveRelease
+    timeoutInMinutes: 420 # job times out in 3 days, Timeout can be define in job level
+    pool: server # this job is executed in a linux server
+    steps:
+    - task: ManualValidation@0
+      timeoutInMinutes: 1440 # task times out in 1 day. Timeout can be define in task level
+      inputs:
+        notifyUsers: 'someuser@someemail.com'
+        instructions: 'Please validate and approve deployment to Production'
+
+  - job: DeployProd
+    steps:
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure'
+        appType: 'webAppContainer'
+        WebAppName: 'ADODemo-prod'
+        DockerNamespace: '$(IMAGE_REGISTRY)'
+        DockerRepository: '$(IMAGE_REPOSITORY)'
+        DockerImageTag: '$(TAG)'
