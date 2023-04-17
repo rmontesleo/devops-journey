@@ -6,3 +6,8 @@ apt-get install nodejs -y
 apt-get install npm -y
 
 npm install pm2 -g
+
+git clone https://github.com/simple-coding-2020/terraform-digitalocean-app.git
+cd terraform-digitalocean-app
+npm install
+pm2 start index.js

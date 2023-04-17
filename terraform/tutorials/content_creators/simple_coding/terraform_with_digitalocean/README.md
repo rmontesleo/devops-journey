@@ -31,6 +31,8 @@ terraform destroy
 ```bash
 # find in a droplet the log 
 tail -f /var/log/cloud-init.log
+
+curl http://localhost:8080
 ```
 
 
@@ -58,6 +60,11 @@ curl -X GET   -H "Content-Type: application/json"   -H "Authorization: Bearer $D
 
 ## References
 
-- [Terraform : DigitalOcean Provider](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs)
+- [YouTube PlayList]() 
+- [GitHub](https://github.com/simple-coding-2020?tab=repositories)
 
+- [Terraform : DigitalOcean Provider](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs)
 - [digitalocean_droplet](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/droplet)
+
+- [DigitalOcean API (2.0)](https://docs.digitalocean.com/reference/api/kafka-beta-api-reference/)
+
