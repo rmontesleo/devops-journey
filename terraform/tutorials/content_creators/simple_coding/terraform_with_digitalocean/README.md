@@ -1,3 +1,4 @@
+# Terraform with DigitalOcean for the impatient
 
 
 ## Commands
@@ -8,6 +9,10 @@
 terraform init
 terraform plan
 terraform init  
+
+# format the terraform files
+terraform fmt
+
 ```
 
 ### commands from Part 4
@@ -35,6 +40,18 @@ tail -f /var/log/cloud-init.log
 curl http://localhost:8080
 ```
 
+### From part 9, see how to add the load balancer with domains and records
+```bash
+
+```
+
+### Part 10. Secure Traffic
+
+### Part 11. Enhance Security
+
+
+### Part 12. Create a DB Cluster
+
 
 
 ### All curl calls
@@ -60,11 +77,17 @@ curl -X GET   -H "Content-Type: application/json"   -H "Authorization: Bearer $D
 
 ## References
 
-- [YouTube PlayList]() 
+- [YouTube PlayList](https://www.youtube.com/playlist?list=PL9evZl_m5wqsc7C38L9grx-djts2bqT_b) 
 - [GitHub](https://github.com/simple-coding-2020?tab=repositories)
 
 - [Terraform : DigitalOcean Provider](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs)
-- [digitalocean_droplet](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/droplet)
+    - [digitalocean_droplet](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/droplet)
 
 - [DigitalOcean API (2.0)](https://docs.digitalocean.com/reference/api/kafka-beta-api-reference/)
 
+
+- [Product Docs Home](https://docs.digitalocean.com/products/)
+- [Managed Databases](https://docs.digitalocean.com/products/databases/)
+    - [MySQL](https://docs.digitalocean.com/products/databases/mysql/)
+        - [MySQL Reference](https://docs.digitalocean.com/products/databases/mysql/reference/)
+- [API Reference Databases](https://docs.digitalocean.com/reference/api/api-reference/#tag/Databases)        
