@@ -87,7 +87,9 @@ curl -X GET   -H "Content-Type: application/json"   -H "Authorization: Bearer $D
 
 
 - [Product Docs Home](https://docs.digitalocean.com/products/)
+
 - [Managed Databases](https://docs.digitalocean.com/products/databases/)
-    - [MySQL](https://docs.digitalocean.com/products/databases/mysql/)
-        - [MySQL Reference](https://docs.digitalocean.com/products/databases/mysql/reference/)
+- [MySQL](https://docs.digitalocean.com/products/databases/mysql/)
+- [MySQL Reference](https://docs.digitalocean.com/products/databases/mysql/reference/)
+
 - [API Reference Databases](https://docs.digitalocean.com/reference/api/api-reference/#tag/Databases)        
