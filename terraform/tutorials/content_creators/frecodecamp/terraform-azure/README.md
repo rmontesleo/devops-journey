@@ -26,9 +26,31 @@ terraform apply -destroy
 # use the flag if you can avoid the approval step
 terraform apply -auto-approve
 
+# when we want only replace some elment and not all infrastructure
+terraform apply -replace $required_item_name
+
+# apply some changes like datasources and outputs
+terraform apply -refresh-only
+
+# list your outputs
+terraform output
+
+# disply and specific output
+terraform output public_ip_address
+
+# see some variables
+terraform console
+
+# we can set/change some values 
+terraform console -var="host_os=linux"
+
+# using an specific variables file
+terraform console -var-file="osx.tfvars"
+
 ```
 
 
+## Local commands and remote commands inside the vm
 ```bash
 ssh-keygetn -t rsa
 
@@ -40,7 +62,7 @@ ssh -i ~/.ssh/mtcazurekey   testadmin@$public_ip
 lsb_release -a
 
 # then exit from the vm
-
+exit
 ```
 
 
@@ -49,5 +71,6 @@ lsb_release -a
 
 - [Azure Provider](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - [Azure Provider Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
+- [Data Sources](https://developer.hashicorp.com/terraform/language/data-sources)
 
 - [Learn Terraform with Azure by Building a Dev Environment – Full Course for Beginners](https://www.youtube.com/watch?v=V53AHWun17s)

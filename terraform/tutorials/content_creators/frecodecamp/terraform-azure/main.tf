@@ -109,7 +109,10 @@ resource "azurerm_virtual_machine" "mtc-vm" {
   vm_size               = "Standard_DS1_v2"
 
   
-  
+  # Review again the video the part of remote script (1:00)
+  # Keep pending the part of provisioner
+  #provisioner "" {    
+  #}
   
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
@@ -151,4 +154,13 @@ resource "azurerm_virtual_machine" "mtc-vm" {
   tags = {
     environment = "dev"
   }
+}
+
+data "azurerm_public_ip" "mtc-ip-data" {
+  name = azurerm_public_ip.mtc-ip.name
+  resource_group_name = azurerm_resource_group.mtc-resources.name
+}
+
+output "public_ip_address" {
+  value = "${azurerm_virtual_machine.mtc-vm.name}: ${data.azurerm_public_ip.mtc-ip-data.ip_address}"
 }
