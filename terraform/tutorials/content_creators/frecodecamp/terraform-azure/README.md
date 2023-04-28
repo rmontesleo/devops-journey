@@ -72,5 +72,8 @@ exit
 - [Azure Provider](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - [Azure Provider Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
 - [Data Sources](https://developer.hashicorp.com/terraform/language/data-sources)
+- [Output Values](https://developer.hashicorp.com/terraform/language/values/outputs)
+- [Conditional Expressions](https://developer.hashicorp.com/terraform/language/expressions/conditionals)
+- [Tutorial Library](https://developer.hashicorp.com/tutorials/library)
 
 - [Learn Terraform with Azure by Building a Dev Environment – Full Course for Beginners](https://www.youtube.com/watch?v=V53AHWun17s)
