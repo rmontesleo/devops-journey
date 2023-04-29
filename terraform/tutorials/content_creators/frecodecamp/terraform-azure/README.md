@@ -65,6 +65,15 @@ lsb_release -a
 exit
 ```
 
+### Some git commands
+```bash
+ git pull
+ git branch -a
+ git fetch --prune
+ git branch -a
+ git branch -D $name_old_branch_to_delete
+```
+
 
 
 ## References
