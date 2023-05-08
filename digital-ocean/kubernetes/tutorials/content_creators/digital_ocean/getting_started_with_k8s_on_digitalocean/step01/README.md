@@ -199,3 +199,7 @@ Mason Egger
 
 - [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)
 - [Kubectl Get Current Context](https://linuxhint.com/kubectl-get-current-context/)
+
+
+- [Starts a local Kubernetes cluster](https://minikube.sigs.k8s.io/docs/commands/start/)
+- [How To Use minikube for Local Kubernetes Development and Testing](https://www.digitalocean.com/community/tutorials/how-to-use-minikube-for-local-kubernetes-development-and-testing)
