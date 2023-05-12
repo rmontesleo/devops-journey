@@ -4,7 +4,7 @@
 ### Prerrequisites. Validate the digital ocean variable for terraform is set in environment
 ```bash
 # get the length of the digital ocean token
-echo ${#TF_VAR_digitalocean_token}
+echo ${TF_VAR_digitalocean_token}
 
 # get the first 3 characters of this variable
 echo ${TF_VAR_digitalocean_token:0:3}
