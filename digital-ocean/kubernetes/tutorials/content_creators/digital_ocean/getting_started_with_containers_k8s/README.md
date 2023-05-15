@@ -38,6 +38,12 @@ docker push $docker_registry_name/do-flask-demo:v0
 
 ```
 
+### connect with k8s cluster
+```bash
+export KUBECONFIG=$PWD/kubeconfig.yaml
+```
+
+
 
 ### Operations with the pod
 ```bash

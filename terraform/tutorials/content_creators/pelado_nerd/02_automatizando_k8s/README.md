@@ -59,11 +59,19 @@ kubectl --kubeconfig=kubeconfig.yaml -n kube-system  get pods -o wide
 
 ### Terraform
 
+- [digitalocean_kubernetes_cluster](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_cluster)
+- [Kubernetes Provider](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs)
+
 
 ### Digital Ocean
+- [doctl Command Line Interface (CLI)](https://docs.digitalocean.com/reference/doctl/)
+- [doctl kubernetes](https://docs.digitalocean.com/reference/doctl/reference/kubernetes/)
 - [doctl kubernetes options sizes](https://docs.digitalocean.com/reference/doctl/reference/kubernetes/options/sizes/)
 - [Select Node Size and Count](https://docs.digitalocean.com/products/kubernetes/concepts/choosing-a-plan/#select-node-size-and-count)
 - [Select Machine Type](https://docs.digitalocean.com/products/kubernetes/concepts/choosing-a-plan/#select-machine-type)
+
+- [DigitalOcean API (2.0)](https://docs.digitalocean.com/reference/api/kafka-beta-api-reference/)
+
 
 
 ### Various Topics
