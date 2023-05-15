@@ -12,6 +12,8 @@ id_rsa
 # Kubernetes
 kubeconfig.yaml
 
+*kubeconfig.yaml
+
 # Terraform
 .terraform
 .terraform.lock.hcl
