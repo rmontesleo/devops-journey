@@ -4,6 +4,8 @@
 
 - [DigitalOcean API (2.0)](https://docs.digitalocean.com/reference/api/api-reference/)
 
+- [Command Line Interface (CLI) Reference for doctl](https://docs.digitalocean.com/reference/doctl/reference/)
+
 - [Tutorials](https://www.digitalocean.com/community/tutorials)
 
 - [Give Feedback Product Docs Home](https://docs.digitalocean.com/products/)
