@@ -36,6 +36,10 @@ curl http://127.0.0.1:3000/
 ---
 ## References
 
-- [Playlist]()
-- [Episode 1]()
-- [Repository]()
+- [Playlist](https://www.youtube.com/watch?v=PCJwJpbln6Q&list=PLC-jxfv-8E7L-w6bdX61qa4ehrrgCIh4R)
+
+- [Episode 1 Monitoreo con Docker (Grafana, Prometheus, Node Exporter, cAdvisor)](https://www.youtube.com/watch?v=PCJwJpbln6Q&list=PLC-jxfv-8E7L-w6bdX61qa4ehrrgCIh4R&index=1)
+
+- [Caos Binario Repository](https://github.com/caosbinario/observability)
+
+- [Prometheus Example App](https://github.com/brancz/prometheus-example-app)
