@@ -1,0 +1,16 @@
+---
+- name: Linode Playbook
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Install all availbale update
+      apt:
+        upgrade: dist
+        update_cache: yest
+    
+    - name: Install Apache
+      apt: 
+        name: apache2
+        state: latest
+        update_cache: yes

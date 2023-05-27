@@ -30,6 +30,11 @@ helm repo update ingress-nginx
 kubectl create ns ingress-nginx
 kubectl get ns
 
+# get the missing line, and validate
+helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx -f nginx-values.yaml
+
+# get all resources from namspace ingress-nginx
+kubectl get all -n ingress-nginx
 
 ```
 
