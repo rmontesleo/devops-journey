@@ -4,7 +4,6 @@
 
 ### working with docker compose
 ```bash
-docker-compose pull
 docker compose pull
 
 docker images
