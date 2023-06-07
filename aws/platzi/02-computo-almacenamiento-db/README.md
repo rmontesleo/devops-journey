@@ -73,11 +73,97 @@ Lambda se factura por milisegundos, y el precio depende del uso de RAM. Por ejem
 
 `Contribución creada por: Ciro Villafraz.`
 
-### 6.
+### 6. Almacenamiento de datos en AWS
 
-### 7.
+El almacenamiento de datos en la nube consiste en subir tus datos a dicha red de servidores, donde se te proporcionan herramientas para que puedas acceder a ellos de diferentes maneras.
 
-### 10.
+#### Tipos de almacenamiento y sus servicios
+Podemos utilizar distintos tipos almacenamiento datos, y para estos hay servicios de AWS. Los tipos de almacenamiento son:
+
+- **Basado en archivos**: el más conocido por todos. Archivos organizados por carpetas y subcarpetas (sistema de ficheros). En esta categoría encontramos a Amazon Elastic File System (EFS) y Amazon FSx for Windows File Server.
+- **Bloque**: los archivos se almacenan en volúmenes por fragmentos de datos de igual tamaño, sin procesar. Este tipo de almacenamiento es utilizado como disco duro de nuestros servidores o máquinas virtuales. En esta categoría está Amazon Elastic Block Store (EBS).
+- **Objetos**: la información almacenada se almacena como objetos, de manera que cada objeto recibe un identificador único y se almacena en un modelo de memoria plana. Un ejemplo de esto es Amazon Simple Storage Service (S3).
+
+#### Respaldo de datos
+Amazon Backup administra y automatiza de forma centralizada las copias de seguridad en los servicios de AWS.
+
+#### Servicios de transferencia de datos
+¿Qué pasa si necesitamos transferir datos de nuestros servidores hacia AWS (o viceversa)? AWS ofrece distintos servicios para la transferencia de datos.
+
+- **AWS Storage Gateway**: un conjunto de servicios de almacenamiento en la nube híbrida que brinda acceso en las instalaciones al almacenamiento en la nube.
+- **AWS DataSync**: acelera el traslado de datos desde y hacia AWS hasta diez veces más rápido de lo normal.
+- **AWS Transfer Family**: escala de forma segura tus transferencias recurrentes de archivos de Amazon S3 y Amazon EFS con los protocolos FTP, SFTP y FTPS.
+
+#### Conclusión
+Exploramos de manera breve los distintos servicios de almacenamiento de AWS, así como los tipos de almacenamiento que podemos utilizar.
+
+`Contribución creada con los aportes de: Jesús Ignacio García Fernández y Ciro Villafraz.`
+
+
+### 7. S3 y S3 Glacier
+
+Amazon S3 es un servicio de almacenamiento de objetos, líder en la industria. Otorga una garantía de no pérdida de datos del 99.999999999% (11 9’s).
+
+#### Clases de almacenamiento en S3
+Amazon nos ofrece distintas clase de almacenamiento S3 en función de nuestras necesidades de acceso y disponibilidad de los datos.
+
+- **S3 Standard**: almacenamiento de objetos de alta durabilidad, disponibilidad y rendimiento para datos a los que se obtiene acceso con frecuencia.
+- **S3 Standard-IA**: se utiliza con datos a los que se accede con menos frecuencia, pero que requieren un acceso rápido cuando es necesario.
+- **S3 Zone-IA**: similar a Standard-IA, pero con un menor costo de almacenamiento ya que solo usa una zona de disponibilidad. Distinto de las demás clases de almacenamiento de S3, que almacenan datos en un mínimo de tres zonas de disponibilidad (AZ).
+- **S3 Glacier**: ofrece el almacenamiento de menor costo para los datos de larga duración y acceso poco frecuente. Tiene un costo de $1 por TB al mes. Tiene tres opciones para la recuperación de datos (estándar, masiva y acelerada).
+- **S3 Glacier Deep Archive**: la clase de almacenamiento más económica de Amazon S3. Admite la retención a largo plazo y la conservación digital de datos a los que se accede una o dos veces al año.
+- **S3 Intelligent-Tiering**: un tipo de almacenamiento que intenta ahorrar costos moviendo archivos entre los distintos tipos de almacenamiento S3, basado en los patrones de uso de los archivos.
+
+#### Conclusión
+Tenemos variedad de opciones para escoger la clase de almacenamiento S3 en función de nuestras necesidades. Si necesitamos un almacenamiento altamente disponible y duradero, S3 Standard es la mejor opción, mientras que si necesitamos un almacenamiento a largo plazo y de acceso infrecuente, podemos usar S3 Glacier. Escoge la mejor opción según tu caso de uso.
+
+`Contribución creada con los aportes de: Jesús Ignacio García Fernández y Ciro Villafraz.`
+
+
+### 8. Explicando el Amazon Elastic File System (EFS)
+
+**Amazon Elastic File System (EFS)** brinda un sistema de archivos elástico, sencillo, sin servidor y práctico basado en NFS para las máquinas virtuales de EC2.
+
+NFS es un protocolo de archivos en red que permite acceder a archivos y directorios que no están en tu sistema. Esto permite que miles de máquinas puedan conectarse a EFS y procesar los datos que allí se encuentran.
+
+#### Características de EFS
+EFS es altamente disponible y duradero. Provee protección contra una interrupción de la zona de disponibilidad, replicando los archivos en múltiples zonas dentro de una región.
+
+Adicionalmente:
+
+- EFS brinda dos clases de almacenamiento: Standar y Standar IA (para acceso poco frecuente). Puedes implementar políticas para que tus archivos se muevan de Standar a Standar IA después de cierto tiempo.
+- Los datos están encriptados de manera automática.
+
+`Contribución creada por Ciro Villafraz.`
+
+### 9. AWS Storage Gateway
+
+AWS Storage Gateway nos brinda acceso a almacenamiento en la nube prácticamente ilimitado desde nuestra propia infraestructura.
+
+Storage Gateway se compone de tres puertas de acceso diferentes:
+
+#### File Gateway
+File Gateway provee interfaces SMB y NFS para amazon S3, tanto en Windows como en Linux. Gracias a File Gateway, en ambos sistemas operativos veremos un sistema de archivos tal cual como si fuera un disco montado en nuestros computadores, los cuales escriben archivos al sistema, y File Gateway se encarga de guardarlos en S3.
+
+Gracias a esto podemos guardar archivos a S3 como si se tratara de guardar archivos locales. Los archivos S3 luego pueden ser usados por cualquier servicio de AWS.
+
+### Tape Gateway
+Supón que tienes copias de seguridad en cintas físicas. Tape Gateway te permite migrar copias de seguridad a una bibliteca de cintas virtuales en AWS. Tape Gateway es compatible con los principales software de respaldo.
+
+Los contenidos de tus cintas se guardan en S3, lo que te permite implementar S3 Glacier y S3 Glacier Deep Archive para guardar tus copias de seguridad a largo plazo. Una vez que implementas Tape Gateway, puedes olvidarte de los costos relacionados a mantener las cintas físicas.
+
+### Volume Gateway
+Volume Gateway otorga almacenamiento en bloque con protocolo iSCSI, respaldado en la nube. Almacena datos en S3 de acuerdo a dos modos:
+
+- **Modo caché**: almacena los datos principales en S3, mientras que los datos de acceso frecuente se guardan localmente y en caché.
+- **Modo almacenado**: todos los datos se guardan localmente, mientras que se hace una copia de seguridad de manera asíncrona en S3.
+
+#### Conclusión
+Vimos tres posibilidades de uso de Amazon Storage Gateway. Para cada caso de uso, hay una puerta de acceso adecuada, ya sea File, Tape o Volume Gateway.
+
+`Contribución creada por Ciro Villafraz.`
+
+### 10. Laboratorio: crea tu primer bucket de S3 para guardar objetos
 
 ### 11.
 
@@ -101,3 +187,16 @@ Lambda se factura por milisegundos, y el precio depende del uso de RAM. Por ejem
 - [Preguntas frecuentes sobre AWS Lambda](https://aws.amazon.com/es/lambda/faqs/)
 - [Utilización de AWS Lambda con otros servicios](https://docs.aws.amazon.com/es_es/lambda/latest/dg/lambda-services.html#intro-core-components-event-sources)
 - [What are Containers?](https://cloud.google.com/learn/what-are-containers)
+
+- [Amazon Elastic File System](https://aws.amazon.com/es/efs/)
+- [Amazon FSx para Windows File Server](https://aws.amazon.com/es/fsx/windows/)
+- [Amazon Elastic Block Store (EBS)](https://aws.amazon.com/es/ebs/)
+- [Amazon S3](https://aws.amazon.com/es/s3/)
+- [Clases de almacenamiento de Amazon S3](https://aws.amazon.com/es/s3/storage-classes/?nc=sn&loc=3)
+- [Sistema de archivos de red, NFS](https://www.computerweekly.com/es/definicion/Sistema-de-archivos-de-red-NFS)
+- [Server Message Block](https://es.wikipedia.org/wiki/Server_Message_Block)
+- [File Gateway](https://aws.amazon.com/es/storagegateway/file/)
+- [Tape Gateway](https://aws.amazon.com/es/storagegateway/vtl/)
+- [Volume Gateway](https://aws.amazon.com/es/storagegateway/volume/)
+- [¿Qué es el almacenamiento iSCSI y cómo crear una SAN iSCSI?](https://community.fs.com/es/blog/iscsi-storage-basics-plan-iscsi-san.html)
+- [AWS Storage Gateway](https://aws.amazon.com/es/storagegateway/)
