@@ -7,6 +7,7 @@ node_modules/
 # Public and Private key
 id_rsa.pub
 id_rsa
+*.pem
 
 
 # Kubernetes
