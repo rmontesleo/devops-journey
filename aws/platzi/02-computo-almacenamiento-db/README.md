@@ -165,17 +165,82 @@ Vimos tres posibilidades de uso de Amazon Storage Gateway. Para cada caso de uso
 
 ### 10. Laboratorio: crea tu primer bucket de S3 para guardar objetos
 
-### 11.
+### 11. Laboratorio: versionamiento
 
-### 12.
 
-### 13.
 
-### 14.
+### 12. Bases de datos en AWS
 
-### 15.
+Las bases de datos son colecciones estructuradas de datos. Almacenan datos eletrónicamente, y se acceden a ellos desde un sistema informático. AWS cuenta con más de quince motores de bases de datos diferentes, seguros y altamente disponibles.
 
-### 16.
+#### Bases de datos relacionales
+Los servicios de bases de datos relacionales en AWS son:
+
+- **Amazon Aurora**: base de datos relacional compatible con MySQL y PostgreSQL creada para la nube.
+
+- **Amazon Relational Database Service (Amazon RDS)**: servicio de bases de datos relacionales administrado para MySQL, PostgreSQL, MariaDB, Oracle BYOL o SQL Server. Facilita la configuración, el uso y el escalado de varios motores de bases de datos.
+
+- **Amazon Redshift**: ideal para analítica. Usa SQL para analizar datos estructurados y semiestructurados en almacenamientos de datos, bases de datos operativas y lagos de datos, con hardware y machine learning diseñados por AWS para ofrecer rendimiento al mejor precio a cualquier escala. A propósito, Platzi tiene un curso de Redshift
+
+#### Bases de datos clave-valor
+**Amazon DynamoDB** es una base de datos de documentos y valores clave que ofrece un rendimiento de milisegundos de un solo dígito a cualquier escala. Está dirigida a aplicaciones de web de alto tráfico, sistemas de comercio electrónico y aplicaciones de juego.
+
+#### Bases de datos en memoria
+**Amazon ElastiCache** es un servicio de almacenamiento de caché en memoria completamente administrado que admite casos de uso flexibles y en tiempo real. Se usa para almacenar en caché administración de sesiones, tablas de clasificación de juegos y aplicaciones Geo-Espaciales. En ElastiCache encontramos ElastiCache para Memcached y ElastiCache para Redis.
+
+#### Bases de datos basadas en documentos
+**Amazon DocumentDB** es un servicio de base de datos de larga duración, de alta disponibilidad, rápida, escalable y completamente administrado para operar cargas de trabajo de MongoDB esenciales. Entre sus casos de uso se encuentra la gestión de contenidos, catálogos y perfiles de usuario.
+
+#### Conclusión
+Definimos de manera breve algunos tipos de bases de datos en AWS. En las siguientes clases veremos un poco más en detalle estos servicios.
+
+`Contribución creada con los aportes de: Gilberto Pérez Garrido y Ciro Villafraz.`
+
+`
+
+
+### 13. Ventajas de Amazon RDS
+
+Amazon RDS permite crear, ejercutar y ejecutar bases de datos relacionales en la nube. Las bases de datos relacionales son aquellas en las que los datos almacenados poseen una relación entre sí. Los datos se pueden consultar con un lenguaje de consulta llamado SQL.
+
+En Amazon RDS puedes escoger entre 6 motores de bases de datos relacionales diferentes: MYSQL, MariaDB, PostgreSQL, Oracle, SQL Server y Amazon Aurora.
+
+#### Ventajas de Amazon RDS
+Una de las ventajas de Amazon RDS es que facilita la configuración, siendo un servicio completamente administrando (PAAS). Además:
+
+- RDS es altamente escalable, y puede ser usado en múltiple zonas de disponibilidad.
+- Permite crear réplicas de bases de datos de solo lectura.
+- RDS realiza copias de seguridad automática, y es tolerante a fallos.
+- En RDS solo** pagas por lo que usas.**
+
+`Contribución creada por Ciro Villafraz.
+
+### 14. La base de datos DynamoDB
+
+DynamoDB es una base de datos NOSQL de documentos clave-valor, que ofrece un rendimiento en milisegundos de un solo dígito. Entre sus casos de uso tenemos manejo de datos actualizados en tiempo real.
+
+Una base de datos clave-valor almacena datos en forma de claves y valores/atributos. En un documento de Dynamo DB podemos tener claves y una cantidad de atributos distinta para cada clave. Estos atributos también pueden ser de distintos tipos.
+
+#### Características de DynamoDB
+DynamoDB es completamente administrado (PAAS). Funciona en múltiples regiones y puede manejar hasta 20 millones de solicitudes por segundo. Además, cuenta con seguridad, respaldo y restauración integrados.
+
+`Contribución creada con el aporte de Ciro Villafraz.`
+
+
+### 15. ¿Qué es ElastiCache?
+
+**Amazon ElastiCache** es un servicio de almacenamiento en memoria 100% administrado que admite casos de uso flexibles y en tiempo real.
+
+Es una base de datos en memoria que almacena datos a los que se ha accedido previamente en memoria caché, para mejorar la rapidez de acceso a estos datos. Consultar datos en caché siempre es más rápido que consultar directamente la base de datos.
+
+Un ejemplo de uso es el de un sitio de noticias, al cual se accede miles de veces al día. Si los artículos se mantienen en una base de datos en memoria, se podrá acceder a estos mucho más rápido.
+
+ElastiCache posee dos motores, Redis y Memcached. Ambos se monitorean a sí mismos continuamente, y pueden ser escalados hacia arriba o abajo en función de la demanda de la aplicación.
+
+`Contribución creada por Ciro Villafraz.`
+
+
+
 
 
 ## Resources
@@ -200,3 +265,10 @@ Vimos tres posibilidades de uso de Amazon Storage Gateway. Para cada caso de uso
 - [Volume Gateway](https://aws.amazon.com/es/storagegateway/volume/)
 - [¿Qué es el almacenamiento iSCSI y cómo crear una SAN iSCSI?](https://community.fs.com/es/blog/iscsi-storage-basics-plan-iscsi-san.html)
 - [AWS Storage Gateway](https://aws.amazon.com/es/storagegateway/)
+- [Bases de datos relacional ¿Qué es y sus características?](https://ayudaleyprotecciondatos.es/bases-de-datos/relacional/)
+- [Información general sobre el almacenamiento en caché](https://aws.amazon.com/es/caching/?nc1=h_ls)
+- [Amazon RDS](https://aws.amazon.com/es/rds/?p=ft&amp;c=db&amp;z=3)
+- [Cree aplicaciones modernas con las bases de datos gratuitas en AWS](https://aws.amazon.com/es/free/database/)
+- [Fundamentos de las bases de datos NoSQL](https://www.mongodb.com/es/nosql-explained)
+- [Redis](https://redis.io/)
+- [Memcached](https://memcached.org/)
