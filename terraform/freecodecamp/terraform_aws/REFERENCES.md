@@ -67,7 +67,21 @@ terraform statate list
 
 terraform state show
 
+# get the ip from instance
+terraform state show aws_instance.dev_node
+
+
+# connect with the key
+ssh -i ~/.ssh/aws/mtc_key ubuntu@$public_node_ip
+
 ```
+
+### Step 5: Redeploy
+```bash
+# the provisioner does not change the instance, we need another way to apply the change, with -replace
+terraform apply -replace aws_instance.dev_node
+```
+
 
 
 ## AWS Commands
@@ -86,6 +100,7 @@ aws ec2 describe-key-pairs | jq
 
 # List your EC2 instances
 aws ec2 describe-instances | jq
+
 
 
 ```

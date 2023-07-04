@@ -77,8 +77,8 @@ resource "aws_key_pair" "mtc_aut" {
   public_key = file("~/.ssh/aws/mtc_key.pub")
 }
 
-resource "aws_instance" "dev_node" {
 
+resource "aws_instance" "dev_node" {
 
   instance_type          = "t2.micro"
   ami                    = data.aws_ami.server_ami.id
@@ -95,4 +95,19 @@ resource "aws_instance" "dev_node" {
     Name = "dev-node"
   }
 
+
+  provisioner "local-exec" {
+    command =  templatefile( "linux-ssh-config.tpl", {
+      hostname = self.public_ip,
+      user = "ubuntu",
+      identifyfile = "~/.ssh/aws/mtc_key"
+    })
+
+    # for windows
+    #interpreter = [ "Powershell", "-Command" ]
+
+    # for linux/mac
+    interpreter = [ "bash", "-c" ]
+  }
+  
 }

@@ -1,13 +1,20 @@
 #!/bin/bash
-sudo apt-get udate -y &&
-sudo apt-get install -y \
-apt-transport-https \
-ca-cartificates \
+
+sudo apt-get update -y  
+
+sudo apt-get install -y vim curl zsh jq  \
+tmux apt-transport-https zip unzip \
+git wget gcc tree
+
+sudo apt-get -y install \
+ca-certificates \
 curl \
-gnup-agent \
-sowtware-properties-common &&
-sudo mkdir -m 0755 -p /etc/apt/keyrings &&
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg &&
+gnupg \
+lsb-release
+
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
@@ -20,4 +27,6 @@ containerd.io \
 docker-buildx-plugin \
 docker-compose-plugin
 
-sudo usermod -aG docker $USER
+sudo groupadd docker
+
+sudo usermod -aG docker ubuntu
