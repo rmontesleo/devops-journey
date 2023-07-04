@@ -82,6 +82,44 @@ ssh -i ~/.ssh/aws/mtc_key ubuntu@$public_node_ip
 terraform apply -replace aws_instance.dev_node
 ```
 
+### Step 6: Variables
+```bash
+terraform console
+
+###
+var.host_os
+exit
+###
+
+# to override some variable
+terraform console -var="host_os=unix"
+
+# to override many variables defined in a file
+terraform console -var-file="dev.tfvars"
+
+# check conditional
+terraform console -var="host_os=windows"
+
+###
+var.host_os == "windows" ? "powershell" : "bash"
+var.host_os == "linux" ? "powershell" : "bash"
+###
+
+
+terraform console
+
+###
+aws_instance.dev_node.public_ip
+###
+
+
+# just see the output value
+terraform apply -refresh-only
+
+terraform output
+
+```
+
 
 
 ## AWS Commands
@@ -114,10 +152,9 @@ aws ec2 describe-instances | jq
 - [AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 - [Resource: aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group)
 - [Resource: aws_key_pair](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair)
-
 - [Data Source: aws_ami](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami)
-
 - [file Function](https://developer.hashicorp.com/terraform/language/functions/file)
+- [local-exec Provisioner](https://developer.hashicorp.com/terraform/language/resources/provisioners/local-exec)
 
 
 ### AWS
