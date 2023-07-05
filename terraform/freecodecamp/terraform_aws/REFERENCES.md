@@ -155,6 +155,9 @@ aws ec2 describe-instances | jq
 - [Data Source: aws_ami](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami)
 - [file Function](https://developer.hashicorp.com/terraform/language/functions/file)
 - [local-exec Provisioner](https://developer.hashicorp.com/terraform/language/resources/provisioners/local-exec)
+- [Output Values](https://developer.hashicorp.com/terraform/language/values/outputs)
+- [Conditional Expressions](https://developer.hashicorp.com/terraform/language/expressions/conditionals)
+- [Input Variables](https://developer.hashicorp.com/terraform/language/values/variables)
 
 
 ### AWS
@@ -168,3 +171,10 @@ aws ec2 describe-instances | jq
 - [AWS Describe key pairs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-key-pairs.html)
 
 
+### Other resources
+
+- [Using the SSH Config File](https://linuxize.com/post/using-the-ssh-config-file/)
+
+
+### Solving Issues
+- [GitHub SSH Config: "Bad configuration option: IdentifyFile" [closed]](https://stackoverflow.com/questions/16116788/github-ssh-config-bad-configuration-option-identifyfile)
