@@ -74,7 +74,7 @@
     - Save changes
 
 
-9. Create a public EC2 instance
+9. Create a private EC2 instance
   - name the instance `my-private-instance`
   - choose a t2.micro
   - choose a key pair or create `my-key-pair`

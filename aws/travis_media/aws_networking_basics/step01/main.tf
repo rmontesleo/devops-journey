@@ -123,7 +123,9 @@ resource "aws_key_pair" "travis_key_pair" {
   }
 }
 
-# Step 11 : Create the public security group
+# Step 11 : Create the security groups
+
+## Step 11.1 Create the public security group
 resource "aws_security_group" "travis_public_security_group" {
   name        = "SGPublic"
   description = "Public security group"
@@ -149,8 +151,35 @@ resource "aws_security_group" "travis_public_security_group" {
 
 }
 
+# Step 11.2 Create teh private security group
+resource "aws_security_group" "travis_private_security_group" {
+  name = "SGPrivate"
+  description = "Private security group"
+  vpc_id = aws_vpc.travis_vpc.id
 
-# Step 12: Create the public instance
+  ingress {
+    from_port =  0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+
+  egress {
+    from_port =  0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+
+  tags = {
+    Name = "SGPrivate"
+  }
+
+}
+
+# Step 12: Create the instances 
+
+## Step 12.1 Create the public instance
 resource "aws_instance" "travis_public_node" {
   instance_type               = "t2.micro"
   ami                         = data.aws_ami.ubuntu22_server_ami.id
@@ -166,6 +195,25 @@ resource "aws_instance" "travis_public_node" {
 
   tags = {
     Name = "my-public-instance"
+  }
+
+}
+
+# Step 12.2 Create the public instance
+resource "aws_instance" "travis_private_node" {
+  instance_type = "t2.micro"
+  ami = data.aws_ami.ubuntu22_server_ami.id
+  key_name = aws_key_pair.travis_key_pair.id
+  subnet_id = aws_subnet.travis_private_subnet.id
+  associate_public_ip_address = false
+  vpc_security_group_ids = [ aws_security_group.travis_private_security_group.id ]
+
+  root_block_device {
+    volume_size = 8
+  }
+
+  tags = {
+    Name = "my-private-instance"
   }
 
 }
