@@ -28,8 +28,10 @@
   - Choose your VPC `my-new-travis-vpc`
   - Name `PublicSubnet` with CIDR 10.0.0.0/24
   - availability Zone us-east-1a
+
   - Choose your VPC `my-new-travis-vpc`
   - Name `PrivateSubnet` with CIDR 10.0.1.0/24
+  - availability Zone us-east-1a
 
 
 3. Create a public EC2 instance
@@ -49,6 +51,7 @@
 5. Create the route tables
     - Called `PublicRouteTable`
     - Associate the route table with the VPC  `my-new-travis-vpc`
+    
     - Called `PrivateRouteTable`
     - Associate the route table with the VPC  `my-new-travis-vpc`
 
@@ -115,6 +118,14 @@ sudo yum update -y
     - Destination will be 0.0.0.0/0
     - Target choose the Nat Gateway
     - Save changes
+
+
+## CLI calls
+```bash
+
+
+```
+
 
 
 ## REFERENCES
