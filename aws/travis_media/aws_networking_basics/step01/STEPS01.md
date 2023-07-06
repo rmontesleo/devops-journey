@@ -30,6 +30,9 @@ aws ec2 describe-route-tables | jq
 
 ## References 
 
+- [Setting up a NAT gateway on AWS using Terraform](https://dev.betterdoc.org/infrastructure/2020/02/04/setting-up-a-nat-gateway-on-aws-using-terraform.html)
 - [describe-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html)
 - [describe-internet-gateways](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-internet-gateways.html)
 - [describe-route-tables](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-route-tables.html)
+- [get-transit-gateway-route-table-associations](https://docs.aws.amazon.com/cli/latest/reference/ec2/get-transit-gateway-route-table-associations.html)
+- [describe-images](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html)
