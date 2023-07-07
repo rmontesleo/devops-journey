@@ -27,6 +27,12 @@ aws ec2 describe-route-tables | jq
 
 ```
 
+### connect the two instances
+```bash
+sudo scp -i mtc_key  mtc_key  ubuntu@$public_instance_ip:/home/ubuntu
+```
+
+
 
 ## References 
 
