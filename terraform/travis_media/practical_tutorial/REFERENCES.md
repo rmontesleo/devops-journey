@@ -41,3 +41,11 @@ terraform output -raw instance_public_ip
 - [describe-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html)
 - [Query Data with Outputs](https://developer.hashicorp.com/terraform/tutorials/docker-get-started/docker-outputs)
 
+
+## Solving issues
+
+- [How do I install a software package from the Extras Library on an EC2 instance running Amazon Linux 2?](https://repost.aws/knowledge-center/ec2-install-extras-library-software)
+- [Cannot install Nginx on AWS EC2 AMI2 - Topic :topic: is not found](https://superuser.com/questions/1520246/cannot-install-nginx-on-aws-ec2-ami2-topic-topic-is-not-found)
+- [How to install nginx 1.9.15 on amazon linux disto](https://stackoverflow.com/questions/37082406/how-to-install-nginx-1-9-15-on-amazon-linux-disto)
+- [Error getting to install aws linux-extras](https://repost.aws/questions/QUcnXSrFjeRvyddoe8lFwPcQ/error-getting-to-install-aws-linux-extras)
+- [How do I turn on the EPEL repository for my Amazon EC2 instance that runs CentOS, RHEL, or Amazon Linux?](https://repost.aws/knowledge-center/ec2-enable-epel)
