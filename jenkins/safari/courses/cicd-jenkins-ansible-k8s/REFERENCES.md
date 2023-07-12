@@ -11,3 +11,4 @@
 
 ## AWS
 - [Amazon Corretto 17 Installation Instructions for Amazon Linux 2 and Amazon Linux 2022](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/amazon-linux-install.html)
+- [describe-security-groups](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-security-groups.html)
