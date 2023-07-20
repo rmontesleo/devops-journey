@@ -9,7 +9,7 @@ terraform {
   #  key            = "terraform.tfstate"
   #  region         = "us-east-1"
   #  dynamodb_table = "terraform-state-locking"
-  #  encrypt        = true
+  #  encrypt        = true`
   #}
 
   required_providers {
@@ -39,6 +39,13 @@ data "aws_subnets" "default_subnets" {
     values = [ data.aws_vpc.default_vpc.id ]
   }
 }
+
+
+#############################################################
+## Route53 configuration
+#############################################################
+
+
 
 
 #############################################################
@@ -92,6 +99,54 @@ resource "aws_lb_listener" "http" {
   }
 }
 
+resource "aws_lb_listener_rule" "instances" {
+  listener_arn = aws_lb_listener.http.arn
+  priority = 100
+
+  condition {
+    path_pattern {
+      values = [ "*" ]
+    }
+  }
+
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.instances.arn
+  }
+
+}
+
+
+resource "aws_lb_target_group" "instances" {
+  name = "example-target-group"
+  port = 8080
+  protocol = "HTTP"
+  vpc_id = data.aws_vpc.default_vpc.id
+
+  health_check {
+    path = "/"
+    protocol = "HTTP"
+    matcher = "200"
+    interval = 15
+    timeout = 3
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+  }
+}
+
+resource "aws_lb_target_group_attachment" "instance_1" {
+  target_group_arn = aws_lb_target_group.instances.arn
+  target_id = aws_instance.instance_1.id
+  port = 8080
+}
+
+resource "aws_lb_target_group_attachment" "instance_2" {
+  target_group_arn = aws_lb_target_group.instances.arn
+  target_id = aws_instance.instance_2.id
+  port = 8080  
+}
+
+
 #############################################################
 ## EC2 Configuration
 #############################################################
@@ -121,10 +176,15 @@ resource "aws_instance" "instance_1" {
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.instances.name]
   user_data       = <<-EOF
-                #!/bin/bash
-                echo "Hello, World 1" > index.html
-                python3 -m https.server 8080 &
-               EOF 
+            #!/bin/bash
+            echo "Hello, World 1" > index.html
+            python3 -m http.server 8080 &
+            EOF
+
+  tags = {
+    Name = "instance_1"
+  }
+
 }
 
 resource "aws_instance" "instance_2" {
@@ -136,6 +196,11 @@ resource "aws_instance" "instance_2" {
             echo "Hello, World 2" > index.html
             python3 -m http.server 8080 &
             EOF
+
+  tags = {
+    Name = "instance_2"
+  }
+
 }
 
 
