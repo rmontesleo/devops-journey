@@ -46,6 +46,21 @@ data "aws_subnets" "default_subnets" {
 #############################################################
 
 
+#resource "aws_route53_zone" "primary" {
+#  name = "" # set your own domain name here.  
+#}
+
+#resource "aws_route53_record" "root" {
+#  zone_id = aws_route53_zone.primary.zone_id
+#  name = "" # set your own domain name here. 
+#  type = "A"
+#  alias {
+#    name =  aws_lb.load_balancer.dns_name
+#    zone_id = aws_lb.load_balancer.zone_id
+#    evaluate_target_health = true
+#  }
+#}
+
 
 
 #############################################################

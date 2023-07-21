@@ -68,7 +68,34 @@ terraform apply -auto-approve
 ```
 
 
+## Part 4: Variables and Outputs
 
+### Setting Input Variables (In order of precedence // lowest -> hightst)
+
+- Manual entry during plan/apply
+- Default value in declaration block
+- TF_VAR_<name> environment variables
+- terraform.tfvars file
+- *.auto.tfvars file
+- Command line -var or -var-file
+
+### Primitive
+- string
+- number
+- bool
+
+### Complex
+- list(<TYPE>)
+- set(<TYPE>)
+- map(<TYPE>)
+- object( { <ATTR_NAME> = <TYPE>, ... } )
+- tupple( [<TYPE>,...] )
+
+### TODO:
+- Example varaibles and outputs
+    - tfvars file(s)
+- Use variables within web app config
+    - `-var` cli option (for db password)    
 
 
 
