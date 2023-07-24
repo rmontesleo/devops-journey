@@ -98,11 +98,72 @@ terraform apply -auto-approve
     - `-var` cli option (for db password)    
 
 
+### execute with files and variables
+```bash
+
+#
+terraform apply -var="db_user=myuser" -var="db_password=SOMETHINSUPERSECURE"
+
+terraform apply -var="db_password=SOMETHINSUPERSECURE"
+
+```
+
+
+## Part 5: Additonal Language Features
+
+### Expressions
+
+- Tempalte strings
+- Operators ( !, - , *, /, %, >, ==, etc ...)
+- For ( [ for o in var.list : o.id] )
+- Splat ( var.list[*].id )
+- Dynamic Blocks
+- Contraints (Type & Version)
+
+### Functions
+- Numeric
+- String
+- Collection
+- Encoding
+- Filesystem
+- Date & Time
+- Hash & Crypto
+- IP Network
+- Type Convrsion 
+
+### Meta-Argument
+
+- count
+- for_each
+- lifecycle
+        lifecycle {
+            create_before_destroy = true
+        }
+        - create_before_destroy
+        - ignore_changes
+        - prevent_destroy
+
+### Provisioner
+- file
+- local-exec
+- remote-exec
+- ventdor
+   - chef
+   - puppet
+   - Ansible
+
+
+## Part 5: Modules
+
+- Root Module
+- Child Module
+- local Path
+- Terraform Registry
 
 ---
 
 ## References
-- []()
+- [Complete Terraform Course - From BEGINNER to PRO! (Learn Infrastructure as Code)](https://www.youtube.com/watch?v=7xngnjfIlK4)
 - [devops-directive-terraform-course](https://github.com/sidpalas/devops-directive-terraform-course)
 - [Complete Terraform Course [DevOps Directive] - Bonus Content!](https://sidpalas.gumroad.com/l/hieekq)
 - [What is Amazon Relational Database Service (Amazon RDS)?](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)

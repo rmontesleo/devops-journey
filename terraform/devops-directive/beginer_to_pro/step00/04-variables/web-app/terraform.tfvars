@@ -1,0 +1,5 @@
+bucket_name = "polo-cloud-web-app-data"
+domain = ""
+db_name = "mydb"
+db_user = "foo"
+# db_passs = "supersecret"
