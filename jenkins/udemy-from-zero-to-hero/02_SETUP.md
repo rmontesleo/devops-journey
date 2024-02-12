@@ -5,6 +5,20 @@
 - install docker and docker compose on rocky 9
 - create an ssh key to access to virtual machine
 
+## 
+Instead use Cent0S 7, I used Rocky 9 Linux (In February of 2024)
+
+##
+```bash
+# to check the ip address
+ip a
+
+# verify you have internet connection
+ping google.com
+
+```
+
+
 
 ## Setup docker image for Jenkins
 ```bash
@@ -81,6 +95,9 @@ docker compose restart jenkins
 
 
 ## Resources
+
+- [Jenkins](https://jenkins.io)
+- [VirtualBox](https://www.virtualbox.org/)
 - [GitHub Repository](https://github.com/ricardoandre97/jenkins-resources)
 - [How To Install and Use Docker on Rocky Linux 9](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-rocky-linux-9)
 - [How To Install and Use Docker Compose on Rocky Linux 9](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-rocky-linux-9)

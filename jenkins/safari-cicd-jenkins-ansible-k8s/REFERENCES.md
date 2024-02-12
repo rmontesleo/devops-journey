@@ -3,6 +3,10 @@
 ## Safari
 - [DevOps Project - 2022: CI/CD with Jenkins Ansible Kubernetes](https://learning.oreilly.com/videos/devops-project/9781803248196/)
 
+## GitHub
+- [Hello-world](https://github.com/yankils/hello-world)
+- [DevOps Project](https://github.com/yankils/Simple-DevOps-Project)
+
 ## Jenkins
 - [Install Jenkins on Linux](https://www.jenkins.io/doc/book/installing/linux/)
 - [Debian/Ubuntu](https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)

@@ -18,7 +18,10 @@ echo "Current dates is $(date)"
 
 ###
 ```bash
+# create an script
 vi script.sh
+
+# set execution permitions
 chmod +x script.sh
 
 # copy some file inside a container copy the file script.sh in the container called jenkins into the tmp directory
