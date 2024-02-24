@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: front-deployment
+    labels:
+        app: front-app
+spec:
+  replicas: {{ .Values.frontReplicaCount }}  
+  selector:
+    matchLabels:
+      app: front-app
+  template:
+    metadata:
+      labels:
+        app: front-app
+    spec:
+      containers:
+      - name: f1
+        imaage: ubuntu:18.04
+        command: ["/bin/bash"]
+        args: [ "-c", "apt update && apt install -y apach2 iputils-ping; service apach2 start; w$art; while true; do echo '<h1>{{ .Values.appTitle  }}</h1>' > /var/www/html/indes.html; ping -c l$g -c 1 back-deployment-service.default.svc.cluster.local >> /var/www/html/index.html ; sleep 60 ;   "  ]
+
+---
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: front-1-deployment-service
+
+spec:
+  type: LoadBalancer
+  selector:
+    app: front-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---  
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-deployment
+  labels:
+    app: back-app
+spec:
+  replicas: {{ .Values.backReplicaCount }}
+  selector:
+    matchLabels:
+      app: back-app  
+  template:
+    metadata:
+      labels:
+        app: back-app
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: back-deployment-service
+
+spec:
+  type: ClusterIP
+  selector:
+    app: bakc-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+# multi lines. use the pipe for readibility
+new-lines: |
+  This is a line in row 1.
+  This is a line in row 2.
+  This is a new line row 3.
+  Tnis is the last line 4.
+
+# this is a single line example
+#This is the first part,this is the second part,and the final part.
+one-line: >
+  This is the first part,
+  this is the second part,
+  and the final part.
+
+
+configuration:
+  jdbc.properties: |
+    user: username
+    password: abcd1234
+    url: jdbc:mysql://localhost:3306/sample

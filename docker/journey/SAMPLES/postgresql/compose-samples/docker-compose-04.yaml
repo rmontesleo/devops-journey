@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+
+  db:
+    image: 'postgres:11'
+    container_name: posgresqldb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-sample04-db-volume:/var/lib/posgresql/data
+    env_file:
+      - .env_container
+
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=demo
+
+    
+  pgadmin:
+    image: dpage/pgadmin4:6.8
+    container_name: pgadmin
+    ports:
+      - 9090:80    
+    volumes:
+      - postgres-sample04-pgadmin-volume:/var/lib/pgadmin
+    env_file:
+      - .env_file
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+
+
+volumes:
+  postgres-sample04-db-volume:
+  postgres-sample04-pgadmin-volume:
+
+
+networks:
+  default:
+    name: postgres-sample04-network

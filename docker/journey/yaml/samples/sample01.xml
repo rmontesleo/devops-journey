@@ -1,0 +1,7 @@
+<microservices>
+    <microservice>
+        <app>user-authentication</app>
+        <port>9000</port>
+        <version>1.0</version>
+    </microservice>
+</microservices>

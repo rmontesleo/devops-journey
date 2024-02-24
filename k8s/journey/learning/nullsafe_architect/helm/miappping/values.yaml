@@ -1,0 +1,4 @@
+frontReplicaCount: 2
+backReplicaCount: 2
+
+appTitle: Mi super app

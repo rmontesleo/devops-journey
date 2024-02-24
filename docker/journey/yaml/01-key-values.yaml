@@ -1,0 +1,16 @@
+# This is a comment. Comments can be in any part of the yaml
+
+# Basic string and number
+app: user-authentication
+port: 9000
+version: 1.7
+message: A lot of words in the message
+
+# Boolean values for yaml
+trueBoolValue01: true
+trueBoolValue02: on
+trueBoolValue03: yes
+falseBoolValue01: false
+falseBoolValue02: off
+falseBoolValue03: no
+
