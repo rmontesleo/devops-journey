@@ -12,7 +12,6 @@ id_rsa
 
 # Kubernetes
 kubeconfig.yaml
-
 *kubeconfig.yaml
 
 # Terraform
@@ -51,4 +50,3 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
-
