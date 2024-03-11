@@ -21,6 +21,10 @@ tkn pr ls
 # get the logs oy sum-three-pipeline-run
 tkn pr logs sum-three-pipeline-run 
 
+# describe the pipeline run
+tkn pr describe sum-three-pipeline-run
+
+#--------------------------------------------------------------------------------
 # install tekton dashboard
 kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/release.yaml
 
