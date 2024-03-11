@@ -28,5 +28,4 @@
 
 
 ### Solving Issues
-- [Task Step: From Command to Script](https://stackoverflow.com/questions/29141436/set-e-and-set-x-in-shell-script)
 - [set -e and set -x in shell script](https://stackoverflow.com/questions/29141436/set-e-and-set-x-in-shell-script)
