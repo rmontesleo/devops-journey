@@ -1,0 +1,63 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: v1-display-task
+spec:
+  params:
+    - name: debugX
+      description: Enable/Disable debug x
+    - name: debugV
+      description: Enable/Disable degug v
+    #- name: debugSecrets
+    #  description: Enable/Disable secrets
+    #- name: xcodeQuiet
+    #  description: Enable/Disable quiet mode on xcoce  
+  steps:
+    - name: execute
+      image: ubuntu
+      env:
+        - name: DEBUGX
+          value: $(params.debugX)
+        - name: DEBUGV
+          value: $(params.debugV)
+        #- name: DEBUGSECRETS
+        #  value: $(params.debugSecrets)
+        #- name: XCODEQUIET
+        #  value: $(params.xcodeQuiet)
+      script: |
+        #!/bin/bash
+
+        echo "the value of DEGUGX is $DEBUGX"
+        echo "the value of DEGUGV is $DEBUGV"
+
+        if [ $DEBUGX == "true" ]; then
+          set -x
+        fi
+
+        sleep 1
+        
+        if [ $DEBUGV == "true" ]; then
+          set -v
+        fi
+
+        sleep 1
+
+        echo "###################################"
+        sleep 1
+
+        cat /etc/os-release
+        sleep 1
+
+        echo "This is working"
+        sleep 1
+
+        echos "This not work"
+        sleep 1
+
+        echo "Done"
+        sleep 1
+
+        echo "###################################"
+        sleep 1
+ 
+
