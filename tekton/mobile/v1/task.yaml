@@ -8,10 +8,10 @@ spec:
       description: Enable/Disable debug x
     - name: debugV
       description: Enable/Disable degug v
-    #- name: debugSecrets
-    #  description: Enable/Disable secrets
-    #- name: xcodeQuiet
-    #  description: Enable/Disable quiet mode on xcoce  
+    - name: debugSecrets
+      description: Enable/Disable secrets
+    - name: xcodeQuiet
+      description: Enable/Disable quiet mode on xcoce  
   steps:
     - name: execute
       image: ubuntu
@@ -20,32 +20,41 @@ spec:
           value: $(params.debugX)
         - name: DEBUGV
           value: $(params.debugV)
-        #- name: DEBUGSECRETS
-        #  value: $(params.debugSecrets)
-        #- name: XCODEQUIET
-        #  value: $(params.xcodeQuiet)
+        - name: DEBUGSECRETS
+          value: $(params.debugSecrets)
+        - name: XCODEQUIET
+          value: $(params.xcodeQuiet)
       script: |
         #!/bin/bash
 
         echo "the value of DEGUGX is $DEBUGX"
         echo "the value of DEGUGV is $DEBUGV"
+        echo "the value of DEBUGSECRETS is $DEBUGSECRETS"
+        echo "the value of XCODEQUIET is $XCODEQUIET"
+
+        echo "###################################"
+        sleep 1
 
         if [ $DEBUGX == "true" ]; then
           set -x
         fi
 
-        sleep 1
+        
         
         if [ $DEBUGV == "true" ]; then
           set -v
         fi
 
         sleep 1
-
         echo "###################################"
+        
         sleep 1
 
         cat /etc/os-release
+        pwd
+        ls
+        
+
         sleep 1
 
         echo "This is working"

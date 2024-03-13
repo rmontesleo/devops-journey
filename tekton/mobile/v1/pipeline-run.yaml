@@ -10,3 +10,7 @@ spec:
       value: "true"
     - name: debugV
       value: "true"
+    - name: debugSecrets
+      value: "true"
+    - name: xcodeQuiet
+      value: "true"

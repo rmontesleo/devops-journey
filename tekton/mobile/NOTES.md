@@ -4,7 +4,8 @@
 ### Some tekton commands to execute again the pipeline
 ```bash
 #
-tkn pipeline start v1-display-tasks-pipeline --param debugX=true  --param debugV=false
+tkn pipeline start v1-display-tasks-pipeline --param debugX=false  --param debugV=false --param debugSecrets=false --param xcodeQuiet=false
+
 ```
 
 
@@ -12,8 +13,17 @@ tkn pipeline start v1-display-tasks-pipeline --param debugX=true  --param debugV
 ## References
 
 
+### Tekton
+- [Getting started with Tasks](https://tekton.dev/docs/getting-started/tasks/)
+
+
 ### Medium
 - [Additional Tekton tips for your pipelines](https://medium.com/@jerome_tarte/additional-tekton-tips-for-your-pipelines-7dd662140e8f)
+
+### GitHub
+- [sickcodes/Docker-OSX](https://github.com/sickcodes/Docker-OSX)
+
+
 
 
 ### Solving Issues
