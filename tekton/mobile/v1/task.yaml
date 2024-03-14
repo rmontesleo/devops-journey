@@ -31,42 +31,38 @@ spec:
         echo "the value of DEGUGV is $DEBUGV"
         echo "the value of DEBUGSECRETS is $DEBUGSECRETS"
         echo "the value of XCODEQUIET is $XCODEQUIET"
-
+        
         echo "###################################"
-        sleep 1
 
-        if [ $DEBUGX == "true" ]; then
+        QUIET=""
+        if [ $XCODEQUIET == "true" ]; then
+            QUIET=" -quiet "
+        fi
+        
+        if [ $DEBUGSECRETS == "false" ]; then
+          set +x
+          set +v
+        elif [ $DEBUGSECRETS == "true" ]; then
           set -x
-        fi
-
-        
-        
-        if [ $DEBUGV == "true" ]; then
           set -v
-        fi
 
-        sleep 1
-        echo "###################################"
+          if [ $DEBUGX == "false" ]; then
+            set +x
+          fi        
         
-        sleep 1
-
+          if [ $DEBUGV == "false" ]; then
+            set +v
+          fi
+        fi
+        
+        echo "###################################"
         cat /etc/os-release
         pwd
-        ls
-        
-
-        sleep 1
-
+        ls        
+        echo "executing xbuildcode ${QUIET} with some command"
         echo "This is working"
-        sleep 1
-
         echos "This not work"
-        sleep 1
-
         echo "Done"
-        sleep 1
-
         echo "###################################"
-        sleep 1
  
 
