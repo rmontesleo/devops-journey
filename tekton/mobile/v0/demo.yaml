@@ -1,0 +1,20 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: display-passwords
+spec:
+  params:
+    - name: displayFlag
+      description: Flag to determine if passwords should be displayed
+      type: boolean
+      default: true
+  steps:
+    - name: display-passwords-step
+      image: alpine
+      script: |
+        if [ "$(params.displayFlag)" = "true" ]; then
+          echo "Displaying passwords..."
+          # Add your code here to display passwords
+        else
+          echo "Passwords will not be displayed."
+        fi
