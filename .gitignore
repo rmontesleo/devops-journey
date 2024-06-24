@@ -7,16 +7,22 @@ node_modules/
 
 # Environment variables
 .env
+**/.env
 
 # Public and Private key
 id_rsa.pub
 id_rsa
 *.pem
 
-
 # Kubernetes
 kubeconfig.yaml
 *kubeconfig.yaml
+kubeconfig*.yaml
+*kubeconfig*.yaml
+
+# Other auxiliar files
+decoded_token.txt
+
 
 # Terraform
 .terraform
