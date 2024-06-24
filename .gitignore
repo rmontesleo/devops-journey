@@ -9,6 +9,9 @@ node_modules/
 .env
 **/.env
 
+# Other auxiliar files
+decoded_token.txt
+
 # Public and Private key
 id_rsa.pub
 id_rsa
@@ -20,8 +23,7 @@ kubeconfig.yaml
 kubeconfig*.yaml
 *kubeconfig*.yaml
 
-# Other auxiliar files
-decoded_token.txt
+
 
 
 # Terraform
