@@ -1,0 +1,30 @@
+microservices:
+  - app: user-authentication
+    port: 9000
+    version: 1.7
+  - app: todo-application
+    port: 8080
+    version: 2.1  
+  - app: shopping-cart
+    port: 9090
+    version: 0.1
+
+# is vallid an identation for a list
+databases:
+  - mysql
+  - mariadb
+  - postgres
+  - sqlserver
+  - sqlite
+  - oracle
+  - db2
+
+# is valid if is at same leve of attribute
+programming-languages:
+- java
+- c#
+- python
+- node
+- php
+
+frameworks: ["Spring", "Express", "Flask", "Angular "]

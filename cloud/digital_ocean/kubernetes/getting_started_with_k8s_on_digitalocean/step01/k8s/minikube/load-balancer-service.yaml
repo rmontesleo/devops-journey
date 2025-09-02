@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-demo-service
+  labels:
+    app: python-demo-deployment
+spec:
+  selector:
+    app: python-demo-deployment
+  ports:
+    - port: 8080         
+  type: LoadBalancer

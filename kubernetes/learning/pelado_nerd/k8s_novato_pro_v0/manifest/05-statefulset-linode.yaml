@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-csi-app-set
+spec:
+  selector:
+    matchLabels:
+      app: mypod
+  serviceName: "my-frontend"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mypod
+    spec:
+      containers:
+      - name: my-frontend
+        image: busybox
+        args:
+        - sleep
+        - infinity
+
+        # Create the volume for the pod
+        # mouthPath in wich pad  the volume will be mounted. in this case /data
+        # name: the name of the volume
+        volumeMounts:
+        - mountPath: "/data"
+          name: csi-pvc
+
+  #the definition of the volume     
+  # declaring the volume claim template   
+  volumeClaimTemplates:
+  - metadata:
+      name: csi-pvc
+    spec:      
+      accessModes:
+      # this option allow to read write to the volume
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+
+      # storageClassName is like a driver for kubernetes to use storage
+      # this is a driver for digital ocean (do-)
+      # Create a virtual dist in the cloud provider and mount to the pod
+      storageClassName: linode-block-storage-retain

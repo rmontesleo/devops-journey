@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+
+  db:
+    image: 'postgres:11'
+    container_name: posgresqldb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-sample01-db-volume:/var/lib/posgresql/data
+
+    environment:
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=SuperSecret
+      - POSTGRES_DB=demo
+
+volumes:
+  postgres-sample01-db-volume:
+ 
+networks:
+  default:
+    name: postgres-sample01-network

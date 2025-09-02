@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-demo-deployment
+  labels:
+    app: python-demo-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-demo-deployment
+  template:
+    metadata:
+      labels:
+        app: python-demo-deployment
+    spec:
+      containers:
+      - name: python-demo-deployment
+        image: registry.digitalocean.com/k8s-demo/do-demo-python-k8s:v0
+        ports:
+        - containerPort: 8080

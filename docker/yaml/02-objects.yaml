@@ -1,0 +1,9 @@
+microservice:
+  app: user-authentication
+  port: 9000
+  version: 1.7
+database:
+  user: db-user
+  password: abcd
+  url: someurl
+  port: 3306

@@ -1,0 +1,9 @@
+IDENTIFICATION DIVISION.
+       PROGRAM-ID. SampleProgram.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01  WS-VAR1 PIC X(10).
+       01  WS-VAR2 REDEFINES WS-VAR1 PIC 9(10).
+       PROCEDURE DIVISION.
+           DISPLAY 'Hello, World!'.
+           STOP RUN.

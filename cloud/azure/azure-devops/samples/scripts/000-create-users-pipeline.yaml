@@ -1,0 +1,72 @@
+# azure-pipelines.yml
+# This Sample try to create a user in 3 droplets in Digital Ocean
+# IMPORTANT !!!!!!   This Sample does not work yet...
+
+
+trigger:
+- main
+
+pool:
+    vmImage: 'ubuntu-latest'
+
+variables:
+- group: digital-ocean-variables-group
+- name: master_ip
+  value: $[variables.DROPLET_MASTER_NODE_IP]
+- name: worker01_ip
+  value: $[variables.DROPLET_WORKER_01_NODE_IP]
+- name: worker02_ip
+  value: $[variables.DROPLET_WORKER_02_NODE_IP]    
+
+stages:
+
+- stage: SetupK8sCluster
+  jobs:
+
+  - job: MasterInitialSetup
+    steps:
+    - task: DownloadSecureFile@1
+      name: sshKey
+      inputs:
+        secureFile: 'digital-ocean-key'
+    
+    - script: |
+        sudo chmod 400  $(sshKey.secureFilePath)
+        ssh  -o StrictHostKeyChecking=no  -i $(sshKey.secureFilePath) root@$(master_ip) "
+        echo  ip is $(master_ip) >> demoRoot
+        sudo adduser master
+        sudo usermod -aG sudo master
+        sudo rsync --archive --chown=master:master ~/.ssh /home/master
+        echo 'End of the script' "
+
+  - job: Worker01InitialSetup
+    steps:
+    - task: DownloadSecureFile@1
+      name: sshKey
+      inputs:
+        secureFile: 'digital-ocean-key'
+    
+    - script: |
+        sudo chmod 400 $(sshKey.secureFilePath)
+        ssh -o StrictHostKeyChecking=no -i $(sshKey.secureFilePath) root@$(worker01_ip) "
+        echo  ip is $(worker01_ip) >> demoRoot        
+        sudo adduser worker1
+        sudo usermod -aG sudo worker1
+        sudo rsync --archive --chown=worker1:worker1  ~/.ssh  /home/worker1
+        echo 'End of the script' "      
+
+  - job: Worker02InitialSetup
+    steps:
+    - task: DownloadSecureFile@1
+      name: sshKey
+      inputs:
+        secureFile: 'digital-ocean-key'
+    
+    - script: |
+        sudo chmod 400  $(sshKey.secureFilePath)
+        ssh  -o StrictHostKeyChecking=no  -i $(sshKey.secureFilePath) root@$(worker02_ip) "
+        echo  ip is $(worker02_ip) >> demoRoot
+        sudo adduser worker2
+        sudo usermod -aG sudo worker2
+        sudo rsync --archive --chown=worker2:worker2  ~/.ssh  /home/worker2
+        echo 'End of the script' "

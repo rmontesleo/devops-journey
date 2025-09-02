@@ -1,0 +1,68 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: v1-display-task
+spec:
+  params:
+    - name: debugX
+      description: Enable/Disable debug x
+    - name: debugV
+      description: Enable/Disable degug v
+    - name: debugSecrets
+      description: Enable/Disable secrets
+    - name: xcodeQuiet
+      description: Enable/Disable quiet mode on xcoce  
+  steps:
+    - name: execute
+      image: ubuntu
+      env:
+        - name: DEBUGX
+          value: $(params.debugX)
+        - name: DEBUGV
+          value: $(params.debugV)
+        - name: DEBUGSECRETS
+          value: $(params.debugSecrets)
+        - name: XCODEQUIET
+          value: $(params.xcodeQuiet)
+      script: |
+        #!/bin/bash
+
+        echo "the value of DEGUGX is $DEBUGX"
+        echo "the value of DEGUGV is $DEBUGV"
+        echo "the value of DEBUGSECRETS is $DEBUGSECRETS"
+        echo "the value of XCODEQUIET is $XCODEQUIET"
+        
+        echo "###################################"
+
+        QUIET=""
+        if [ $XCODEQUIET == "true" ]; then
+            QUIET=" -quiet "
+        fi
+        
+        if [ $DEBUGSECRETS == "false" ]; then
+          set +x
+          set +v
+        elif [ $DEBUGSECRETS == "true" ]; then
+          set -x
+          set -v
+
+          if [ $DEBUGX == "false" ]; then
+            set +x
+          fi        
+        
+          if [ $DEBUGV == "false" ]; then
+            set +v
+          fi
+        fi
+        
+        echo "###################################"
+        cat /etc/os-release
+        pwd
+        ls        
+        echo "executing xbuildcode ${QUIET} with some command"
+        echo "This is working"
+        echos "This not work"
+        echo "Done"
+        echo "###################################"
+ 
+

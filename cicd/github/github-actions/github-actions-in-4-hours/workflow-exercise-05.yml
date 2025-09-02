@@ -1,0 +1,60 @@
+# for exercise 5
+
+name: buildfork
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: production
+      # this url come from your apps, execute the command surge list , to get the name. In sample name is..
+      # Change the url and some other values for secrets
+      url: http://flat-wound.surge.sh
+    steps:
+      - name: download build artifacts
+        uses: actions/download-artifact@v4.3.0
+        with:
+          name: build
+      - name: deploy to surge
+        run: npx surge --project '.' -- domain flat-wound.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }} 
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+
+
+
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache
+        uses: actions/cache@v4.2.2
+        with:
+          path: ~/.npm
+          key: buildCache
+      - run: npm ci
+      - run: npm test -- --coverage
+        env:
+          CI: true
+      - name: Upload code coverage
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: codecoverage
+          path: coverage
+      - name: build
+        run: npm run build
+      - name: Upload build files
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: build
+          path: build

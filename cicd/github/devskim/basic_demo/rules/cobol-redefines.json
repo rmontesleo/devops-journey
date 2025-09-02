@@ -1,0 +1,26 @@
+[
+  {
+      "name": "COBOL-Redefines-Usage",
+      "id": "cobol-rules-001",
+      "description": "Detects usage of REDEFINES in COBOL code, which can lead to data loss or inconsistencies.",
+      "recommendation": "Avoid using REDEFINES unless absolutely necessary. Ensure proper documentation and testing for any redefined variables.",
+      "applies_to": [
+          "cobol"
+      ],      
+      "tags": [
+          "redefines"
+      ],
+      "confidence": "high",
+      "severity": "Critical",      
+      "patterns": [
+          {
+              "pattern": "\\bREDEFINES\\b\\s+(?:\\w+(?:\\(\\d+\\))?\\s+)?\\w+",
+              "type": "regex",
+              "scopes": [
+                  "code"
+              ],
+              "_comment": ""
+          }
+      ]
+  }
+]

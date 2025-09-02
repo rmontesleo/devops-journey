@@ -1,0 +1,37 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: new-hello
+spec:
+  steps:
+    - name: hello-alpine
+      image: alpine
+      script: |
+        #!/bin/sh
+        cat /etc/os-release
+        echo "Hello world from alpine"
+    
+    - name: hello-ubuntu
+      image: ubuntu
+      script: |
+        #!/bin/bash
+        cat /etc/os-release
+        echo "Hello Ubuntu lovers"
+    
+    - name: hello-maven
+      image: maven:ibmjava
+      script: |
+        #!/bin/bash
+        echo "#######################################################"
+        echo "Display release"
+        cat /etc/os-release
+        echo "#######################################################"
+        echo "Display mvn version"
+        mvn -version
+        echo "#######################################################"
+        echo "Display Java Version"
+        java -version
+        echo "#######################################################"
+        echo "Hello from Maven IBM Image"
+        echo "Ending..."
+        echo "#######################################################"

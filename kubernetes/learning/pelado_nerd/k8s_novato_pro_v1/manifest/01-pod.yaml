@@ -1,0 +1,12 @@
+# A very basic Pod creation
+# Create a pod call nginx from the image nginx:alpine
+apiVersion: v1
+kind: Pod
+metadata:
+  # The name of this pod
+  name: nginx
+
+spec:
+  containers:
+  - name: nginx
+    image: nginx:alpine

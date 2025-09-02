@@ -1,0 +1,155 @@
+# Ignore files and directories that should not be tracked by Git
+
+# Ignore Operative System files
+.DS_Store
+
+# IDE and editor configuration files
+.vscode
+.vs
+
+# Environment-specific files
+.env
+**/.env
+environment_variables
+**/environment_variables
+
+# Token files
+token_file
+**/token_file
+
+# SHH keys and certificates
+*.pem
+**/*.pem
+
+# Zip Files
+*.zip
+**/*.zip
+
+# Avoid required files to upload and downloaded inside any demo directory
+**/demos/files_to_upload/**
+**/demos/downloads/**
+
+# Permit version the .gitkeep files inside demos/downloads and demos/files_to_upload directories
+!**/demos/files_to_upload/.gitkeep
+!**/demos/downloads/.gitkeep
+
+
+# Ignore  some specific Python files
+__pycache__
+**/__pycache__
+*.pyc
+**/.pyc
+
+pygoat/db.sqlite3
+**/pygoat/db.sqlite3
+
+venv
+**/venv
+
+# Ignore python virtual environments
+env
+
+# Terraform files
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+crash.log
+crash.*.log
+
+# Don't ignore these Terraform files
+!**/.terraform.lock.hcl
+!*.auto.tfvars
+**/env
+
+# Ignore sqlit3 files
+*.sqlite3
+**/*.sqlite3
+*db.sqlite3*
+**/*db.sqlite3*
+
+# Ignore some specific files
+app.log
+**/app.log
+
+bin
+**/bin
+
+# Ignore Node.js modules
+node_modules
+**/node_modules
+
+# Terraform files
+
+
+# ide
+.vscode
+.vs
+
+# Node
+node_modules/
+
+# Environment variables
+.env
+**/.env
+
+# Other auxiliar files
+decoded_token.txt
+
+# Public and Private key
+id_rsa.pub
+id_rsa
+*.pem
+
+# Kubernetes
+kubeconfig.yaml
+*kubeconfig.yaml
+kubeconfig*.yaml
+*kubeconfig*.yaml
+
+
+
+
+# Terraform
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Ignore any .tfvars files that are generated automatically for each Terraform run. Most
+# .tfvars files are managed as part of configuration and so should be included in
+# version control.
+#
+# example.tfvars
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+#
+# !example_override.tf
+
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+# example: *tfplan*

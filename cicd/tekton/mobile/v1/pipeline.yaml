@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: v1-display-tasks-pipeline
+spec:
+  params:
+    - name: debugX
+      description: Enable debug forX
+    - name: debugV
+      description: Enable debug for V
+    - name: debugSecrets
+      description: Enable/Disable the secrets
+    - name: xcodeQuiet
+      description: Enable/Disable quite mode on xcode
+  tasks:
+    - name: v1-display-task
+      taskRef:
+        name: v1-display-task
+      params:
+        - name: debugX
+          value: "$(params.debugX)"
+        - name: debugV
+          value: "$(params.debugV)"
+        - name: debugSecrets
+          value: "$(params.debugSecrets)"
+        - name: xcodeQuiet
+          value: "$(params.xcodeQuiet)"

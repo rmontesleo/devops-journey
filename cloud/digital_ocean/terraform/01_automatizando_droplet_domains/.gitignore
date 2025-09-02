@@ -1,0 +1,19 @@
+# Node
+node_modules/
+
+# Environment variables
+.env
+
+# Public key
+id_rsa.pub
+
+# Terraform
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+
+# Kubernetes
+kubeconfig.yaml
+
+

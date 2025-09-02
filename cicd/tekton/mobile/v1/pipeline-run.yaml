@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: v1-display-tasks-pipeline-run
+spec:
+  pipelineRef:
+    name: v1-display-tasks-pipeline
+  params:
+    - name: debugX
+      value: "true"
+    - name: debugV
+      value: "true"
+    - name: debugSecrets
+      value: "true"
+    - name: xcodeQuiet
+      value: "true"
