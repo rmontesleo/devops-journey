@@ -115,6 +115,9 @@ kubeconfig*.yaml
 *kubeconfig*.yaml
 
 
+# Avoid logs
+*.log
+**/*.log
 
 
 # Terraform
