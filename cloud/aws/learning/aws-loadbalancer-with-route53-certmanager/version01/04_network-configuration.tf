@@ -33,7 +33,7 @@ resource "aws_internet_gateway" "dev-igw" {
 #############################################################
 resource "aws_subnet" "dev-subnet-01" {
   vpc_id = aws_vpc.demo-vpc.id
-  cidr_block = var.subnet_cidr_block_value
+  cidr_block = var.subnet_cidr_block_value_01
   map_public_ip_on_launch = true
   availability_zone = var.subnet_availability_zone_01
   tags = {
@@ -45,7 +45,7 @@ resource "aws_subnet" "dev-subnet-01" {
 
 resource "aws_subnet" "dev-subnet-02" {
   vpc_id = aws_vpc.demo-vpc.id
-  cidr_block = var.subnet_cidr_block_value
+  cidr_block = var.subnet_cidr_block_value_02
   map_public_ip_on_launch = true
   availability_zone = var.subnet_availability_zone_02
   tags = {

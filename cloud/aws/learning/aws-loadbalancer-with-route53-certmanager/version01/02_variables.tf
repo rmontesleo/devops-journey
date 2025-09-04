@@ -19,11 +19,18 @@ variable "vpc_cidr_block_value" {
   default = "10.1.0.0/16"
 }
 
-variable "subnet_cidr_block_value" {
+variable "subnet_cidr_block_value_01" {
   type = string
   sensitive = false
   description = ""
   default = "10.1.2.0/24"
+}
+
+variable "subnet_cidr_block_value_02" {
+  type = string
+  sensitive = false
+  description = ""
+  default = "10.1.3.0/24"
 }
 
 variable "subnet_availability_zone_01" {
