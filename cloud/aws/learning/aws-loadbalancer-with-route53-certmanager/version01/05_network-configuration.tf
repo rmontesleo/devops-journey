@@ -31,6 +31,9 @@ resource "aws_internet_gateway" "dev-igw" {
 #############################################################
 ## Subnet
 #############################################################
+
+# TODO: Implement private subnets to attached the ec2 instances
+
 resource "aws_subnet" "dev-subnet-01" {
   vpc_id = aws_vpc.demo-vpc.id
   cidr_block = var.subnet_cidr_block_value_01

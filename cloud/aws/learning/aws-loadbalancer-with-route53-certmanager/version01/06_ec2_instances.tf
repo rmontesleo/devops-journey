@@ -6,6 +6,8 @@ resource "aws_security_group" "dev-ec2-security-group" {
   name = "dev-ec2-security-group"
   vpc_id = aws_vpc.demo-vpc.id
 
+  # TODO: Change this for a more secure way to connect to the instances
+  # TODO: Implement a  Bastion
   ingress {
     from_port = 22
     to_port = 22
@@ -46,10 +48,11 @@ resource "aws_key_pair" "dev-ec2-intances-key-pair" {
 
 # Nginx Instance
 resource "aws_instance" "nginx-ec2-instance-node-01" {
+  subnet_id = aws_subnet.dev-subnet-01.id
   instance_type = var.ec2_instance_type
   ami = var.ec2_instance_ami
   key_name = aws_key_pair.dev-ec2-intances-key-pair.id
-  subnet_id = aws_subnet.dev-subnet-01.id
+  
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.dev-ec2-security-group.id ]
   user_data_base64 = base64encode(local.ec2-init-nginx)
@@ -66,10 +69,11 @@ resource "aws_instance" "nginx-ec2-instance-node-01" {
 
 # Apache Instance
 resource "aws_instance" "apache-ec2-instance-node-02" {
+  subnet_id = aws_subnet.dev-subnet-02.id
   instance_type = var.ec2_instance_type
   ami = var.ec2_instance_ami
   key_name = aws_key_pair.dev-ec2-intances-key-pair.id
-  subnet_id = aws_subnet.dev-subnet-02.id
+  
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.dev-ec2-security-group.id]
   user_data_base64 = base64encode(local.ec2-init-apache)

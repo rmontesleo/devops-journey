@@ -70,7 +70,7 @@ oc get all
 oc get all -A
 
 #
-oc get deployment
+    oc get deployment
 
 #
 oc get deploymentconfig
