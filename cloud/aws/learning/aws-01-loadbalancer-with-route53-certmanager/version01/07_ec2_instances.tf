@@ -3,16 +3,17 @@
 #############################################################
 
 resource "aws_security_group" "dev-ec2-security-group" {
-  name = "dev-ec2-security-group"
+  name = "${var.dev_tag_project_name}-ec2-nodes-sg"
   vpc_id = aws_vpc.demo-vpc.id
 
   # TODO: Change this for a more secure way to connect to the instances
   # TODO: Implement a  Bastion
+  # TODO: Change cidr_blocks value by the authorized ip to conect with this
   ingress {
-    from_port = 22
-    to_port = 22
+    from_port = var.ec2_node_security_group_ssh_from_port
+    to_port = var.ec2_node_security_group_ssh_to_port
     protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [ var.ec2_node_security_group_cidr_block_value_01 ]
   }
 
   ingress  {
@@ -61,7 +62,7 @@ resource "aws_instance" "nginx-ec2-instance-node-01" {
   }
   
   tags = {
-    Name = "nginx-ec2-instance-node-01"
+    Name =  var.ec2_instance_node01_tag_name
     Project = var.dev_tag_project_name
   }
 
@@ -81,7 +82,7 @@ resource "aws_instance" "apache-ec2-instance-node-02" {
     volume_size = 8
   }
   tags = {
-    Name = "apache-ec2-instance-node-02"
+    Name = var.ec2_instance_node02_tag_name
     Project = var.dev_tag_project_name
   }
 }

@@ -12,7 +12,7 @@ resource "aws_vpc" "demo-vpc" {
   enable_dns_support = true
 
   tags = {
-    Name = "rag-demo-load-balancer-route53-cert-vpc"
+    Name = "${var.dev_tag_project_name}-vpc"
     Project = var.dev_tag_project_name
   }
 }
@@ -23,7 +23,7 @@ resource "aws_vpc" "demo-vpc" {
 resource "aws_internet_gateway" "dev-igw" {
   vpc_id = aws_vpc.demo-vpc.id
   tags = {
-    Name = "rag-demo-load-balancer-route53-cert-igw"
+    Name = "${var.dev_tag_project_name}-igw"
     Project =  var.dev_tag_project_name
   }
 }
@@ -40,7 +40,7 @@ resource "aws_subnet" "dev-subnet-01" {
   map_public_ip_on_launch = true
   availability_zone = var.subnet_availability_zone_01
   tags = {
-    Name = "rag-demo-load-balancer-route53-cert-subnet-01"
+    Name = "${var.dev_tag_project_name}-subnet-01"
     Project =  var.dev_tag_project_name
   }
 }
@@ -52,7 +52,7 @@ resource "aws_subnet" "dev-subnet-02" {
   map_public_ip_on_launch = true
   availability_zone = var.subnet_availability_zone_02
   tags = {
-    Name = "rag-demo-load-balancer-route53-cert-subnet-02"
+    Name = "${var.dev_tag_project_name}-subnet-02"
     Project =  var.dev_tag_project_name
   }
 }
@@ -64,7 +64,7 @@ resource "aws_subnet" "dev-subnet-02" {
 resource "aws_route_table" "dev-rt" {
   vpc_id = aws_vpc.demo-vpc.id
   tags = {
-    Name = "rag-demo-load-balancer-route53-cert-route-table"
+    Name = "${var.dev_tag_project_name}-route-table"
     Project =  var.dev_tag_project_name
   }
 }
