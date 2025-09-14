@@ -100,28 +100,48 @@
 --- 
 
 
+## Some Networking commands
+```bash
+# get the current ip. Then to configure the submask is /32
+curl ifconfig.me
+```
+
+
 ## Using Terraform
 ```bash
+
+## Basic commands
 terraform init
-
 terraform plan
-# For Ohio
-terraform plan -var-file="02.2_us-east-values.tfvars"
-# For Mexico
-terraform plan -var-file="02.1_mx-central-values.tfvars"
-
-
 terraform apply
 terraform apply -auto-approve
+
+##################################################### To use in Ohio region
+terraform plan -var-file="02.2_us-east-values.tfvars"
+
 terraform apply -auto-approve -var-file="02.2_us-east-values.tfvars"
-terraform apply -auto-approve -var-file="02.1_mx-central-values.tfvars"
 
 # To create infrastructure in Ohiio
 TF_LOG=DEBUG TF_LOG_PATH=./tf_us_east.log terraform apply -auto-approve -var-file="02.2_us-east-values.tfvars"
 
+terraform destroy -auto-approve -var-file="02.2_us-east-values.tfvars"
+
+##################################################### To use in Mexico region
+terraform plan -var-file="02.1_mx-central-values.tfvars"
+
+terraform apply -auto-approve -var-file="02.1_mx-central-values.tfvars"
+
 # To create infrastructure in Mexico
 TF_LOG=DEBUG TF_LOG_PATH=./tf_mx.log terraform apply -auto-approve -var-file="02.1_mx-central-values.tfvars"
 
+terraform destroy -auto-approve -var-file="02.1_mx-central-values.tfvars"
 
-terraform destroy -auto-approve -var-file="02.2_us-east-values.tfvars"
+```
+
+
+### Apply output commands
+```bash
+# execute the dig_test_main_domain dig 8.8.8.8 ${local.full_domain_name}
+$(terraform output -json testing_commands | jq -r '.dig_test_main_domain')
+
 ```

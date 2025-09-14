@@ -88,7 +88,7 @@ resource "aws_route53_record" "cert_validation" {
 # Certificate Validation
  resource "aws_acm_certificate_validation" "cert" {
   certificate_arn =  aws_acm_certificate.poc-certificate.arn
-  validation_record_fqdns = [for record in aws_route53_record.aws_route53_record.cert_validation : record.fqdn  ]
+  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn  ]
 }
 
 
@@ -98,7 +98,7 @@ resource "aws_route53_record" "main" {
   type = "A"
 
   alias {
-    name = aws_lb.loadbalancer.name
+    name = aws_lb.loadbalancer.dns_name
     zone_id = aws_lb.loadbalancer.zone_id
     evaluate_target_health = true
   }

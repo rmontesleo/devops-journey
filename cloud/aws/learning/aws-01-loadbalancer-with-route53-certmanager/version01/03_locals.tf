@@ -6,6 +6,6 @@ locals {
 
   full_domain_name = "${var.subdomain_name}.${var.domain_name}"
 
-  www_domain_name = "www.${full_domain_name}"
+  www_domain_name = "www.${local.full_domain_name}"
 
 }
