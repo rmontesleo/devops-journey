@@ -1,0 +1,11 @@
+# Ignored files from editors adn IDE's 
+.vscode
+.vs
+
+#
+.env
+**/.env
+
+#
+*.pem
+**/*.pem
